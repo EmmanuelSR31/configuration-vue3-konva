@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg preserveAspectRatio="none" version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="299.25px" height="299.25px" viewBox="30 -27.145 299.25 299.25" enable-background="new 30 -27.145 299.25 299.25"
+	 xml:space="preserve">
+<g id="surface456">
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="451.7256" y1="658.5537" x2="52.7256" y2="658.5536" gradientTransform="matrix(0.75 0 0 0.75 -9.5449 -371.4346)">
+		<stop  offset="0" style="stop-color:#292525"/>
+		<stop  offset="0.02" style="stop-color:#868584"/>
+		<stop  offset="0.02" style="stop-color:#383433"/>
+		<stop  offset="0.64" style="stop-color:#373332"/>
+		<stop  offset="0.95" style="stop-color:#363130"/>
+		<stop  offset="1" style="stop-color:#252221"/>
+	</linearGradient>
+	<path fill="url(#SVGID_1_)" d="M48-27.145h263.25c9.75,0,18,7.996,18,17.859v263.392c0,9.75-8.055,18-17.918,18H48
+		c-9.75,0-18-8.056-18-17.918V-9.145c0-9.75,7.996-18,17.863-18H48z"/>
+	<path fill="#DCDCDD" d="M40.969-19.156h277.5v277.5h-277.5C40.969,258.344,40.969-19.156,40.969-19.156z"/>
+	<path stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M50.348-11.121h258.75v258.75H50.348V-11.121z"/>
+	<path fill="#B4B5B5" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M105.609,55.863h147.75v48.75h-147.75
+		V55.863z"/>
+	<path fill="#DCDCDD" d="M50.578,215.953h258v5.25h-258V215.953z"/>
+	<path fill="#99222A" stroke="#CDCECE" stroke-linejoin="bevel" stroke-miterlimit="10" d="M87.867,177.105h15
+		c6,0,10.082,4.348,10.082,9.711c-0.332,5.289-4.352,9.715-9.715,9.715l-15.367,0.074c-5.25,0-9.75-4.426-9.75-9.789
+		c0-5.211,4.348-9.711,9.711-9.711H87.867z"/>
+	<path fill="#99222A" stroke="#CDCECE" stroke-linejoin="bevel" stroke-miterlimit="10" d="M143.91,177.105h15
+		c6,0,10.082,4.348,10.082,9.711c-0.332,5.289-4.352,9.715-9.715,9.715l-15.367,0.074c-5.25,0-9.75-4.426-9.75-9.789
+		c0-5.211,4.348-9.711,9.711-9.711H143.91z"/>
+	<path fill="#99222A" stroke="#CDCECE" stroke-linejoin="bevel" stroke-miterlimit="10" d="M199.953,177.105h15
+		c6,0,10.082,4.348,10.082,9.711c-0.332,5.289-4.352,9.715-9.715,9.715l-15.367,0.074c-5.25,0-9.75-4.426-9.75-9.789
+		c0-5.211,4.348-9.711,9.711-9.711H199.953z"/>
+	<path fill="#99222A" stroke="#CDCECE" stroke-linejoin="bevel" stroke-miterlimit="10" d="M255.996,177.105h15
+		c6,0,10.082,4.348,10.082,9.711c-0.332,5.289-4.352,9.715-9.715,9.715l-15.367,0.074c-5.25,0-9.75-4.426-9.75-9.789
+		c0-5.211,4.348-9.711,9.711-9.711H255.996z"/>
+	<path fill="#DCDCDD" d="M50.578,226.672h258v5.25h-258V226.672z"/>
+	<path fill="#FFFFFF" stroke="#FFFFFF" stroke-linejoin="bevel" stroke-miterlimit="10" d="M178.621,135.398l-7.5-18h3l4.5,12.75
+		c0,1.5,0.691,2.398,0.953,3.316c0.547-1.066,0.621-1.969,1-2.953l4.797-13.113h3l-7.5,18H178.621L178.621,135.398z"/>
+</g>
+</svg>

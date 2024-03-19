@@ -1,0 +1,93 @@
+{
+  "id": "2343281",
+  "name": "无人值守系统",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4465012",
+      "name": "物流",
+      "font_class": "wuliuxiaocheche",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "7326003",
+      "name": "配置",
+      "font_class": "xitongshezhi",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "415287",
+      "name": "销售报表",
+      "font_class": "xiaoshoubaobiao",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "9118054",
+      "name": "系统配置",
+      "font_class": "xitongpeizhi",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "338284",
+      "name": "取号排队",
+      "font_class": "quhaopaidui",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "880427",
+      "name": "卡",
+      "font_class": "card",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "4933240",
+      "name": "审批",
+      "font_class": "shenpi",
+      "unicode": "e6ff",
+      "unicode_decimal": 59135
+    },
+    {
+      "icon_id": "7992456",
+      "name": "采购",
+      "font_class": "caigou-",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "11121461",
+      "name": "流程管理器",
+      "font_class": "liuchengguanliqi",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "11121471",
+      "name": "文件夹",
+      "font_class": "-w_wenjianjia-",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "16388265",
+      "name": "设备",
+      "font_class": "shebei",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
+      "icon_id": "18049472",
+      "name": "文件",
+      "font_class": "-file",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    }
+  ]
+}

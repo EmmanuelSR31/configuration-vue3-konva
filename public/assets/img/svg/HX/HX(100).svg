@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg preserveAspectRatio="none"   version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="132.765px" height="564.335px" viewBox="217.082 1.336 132.765 564.335"
+	 enable-background="new 217.082 1.336 132.765 564.335" xml:space="preserve">
+<g id="surface46">
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="312.2212" y1="-38.8105" x2="202.0815" y2="-38.8106" gradientTransform="matrix(0.75 0 0 -0.75 90.829 152.3126)">
+		<stop  offset="0" style="stop-color:#C5B5A2"/>
+		<stop  offset="0.15" style="stop-color:#FDEFDD"/>
+		<stop  offset="0.25" style="stop-color:#FEF0DF"/>
+		<stop  offset="0.52" style="stop-color:#DECCB6"/>
+		<stop  offset="0.69" style="stop-color:#C5B5A2"/>
+		<stop  offset="0.8" style="stop-color:#BAAB98"/>
+		<stop  offset="0.92" style="stop-color:#B0A190"/>
+	</linearGradient>
+	<path fill="url(#SVGID_1_)" d="M284.496,1.336c25.5,0,40.41,13.773,40.41,19.391l0.09,330.859c0,5.25-4.613,9.922-10.195,9.922
+		l-62.554-0.172c-5.25,0-9.855-4.383-9.855-10l0.105-330.5c0-6,16.734-19.5,41.996-19.5H284.496z"/>
+	
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="379.2466" y1="15.8057" x2="202.2256" y2="15.8056" gradientTransform="matrix(0.75 0 0 -0.75 65.412 438.4005)">
+		<stop  offset="0" style="stop-color:#C5B5A2"/>
+		<stop  offset="0.15" style="stop-color:#FDEFDD"/>
+		<stop  offset="0.25" style="stop-color:#FEF0DF"/>
+		<stop  offset="0.52" style="stop-color:#DECCB6"/>
+		<stop  offset="0.69" style="stop-color:#C5B5A2"/>
+		<stop  offset="0.8" style="stop-color:#BAAB98"/>
+		<stop  offset="0.92" style="stop-color:#B0A190"/>
+	</linearGradient>
+	<path fill="url(#SVGID_2_)" d="M226.832,287.421h113.25c5.25,0,9.766,4.492,9.766,10.109l-0.016,257.641
+		c0,6-4.508,10.406-10.086,10.406l-112.914,0.094c-5.25,0-9.75-4.648-9.75-10.266V297.171c0-5.25,4.43-9.75,10.008-9.75H226.832z"/>
+</g>
+</svg>

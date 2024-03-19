@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg preserveAspectRatio="none" version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="300.25px" height="274.031px" viewBox="29.5 -8.98 300.25 274.031" enable-background="new 29.5 -8.98 300.25 274.031"
+	 xml:space="preserve">
+<g id="surface561">
+	<path fill="#CFEBF6" stroke="#CFEBF6" stroke-linejoin="bevel" stroke-miterlimit="10" d="M38.27,20.051h282v198l-141,34.5
+		l-141-34.5V20.051z"/>
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="54.4868" y1="32.7866" x2="21.4868" y2="32.7866" gradientTransform="matrix(0.75 0 0 -0.75 23.4785 116.8584)">
+		<stop  offset="0" style="stop-color:#C4C4C4"/>
+		<stop  offset="0.15" style="stop-color:#FFFFFF"/>
+		<stop  offset="0.25" style="stop-color:#FFFFFF"/>
+		<stop  offset="0.44" style="stop-color:#DFDFDF"/>
+		<stop  offset="0.6" style="stop-color:#C7C7C7"/>
+		<stop  offset="0.8" style="stop-color:#A8A8A8"/>
+		<stop  offset="0.97" style="stop-color:#999999"/>
+		<stop  offset="1" style="stop-color:#CBCBCB"/>
+	</linearGradient>
+	<path fill="url(#SVGID_1_)" d="M39.594-8.98h24.75v202.5h-24.75V-8.98z"/>
+	<path fill="#595757" stroke="#595757" stroke-linejoin="bevel" stroke-miterlimit="10" d="M38.59,217.621l141,35.25l141-35.25
+		v-10.5c0,0-18.805-2.762-26.289-0.266c-7.461,2.516-9.473,1-13.965,1c-4.746,0.016-19.949-2.496-19.949-2.496
+		c0.203,0.262-10.473,2.992-13.465,1.496c-2.832-1.234-1.996-3.992-5.984-1.496c-4.348,2.512-5.488,4.988-12.969,1.496
+		c-7.129-3.484-12.469,0-19.949,0c-7.43,0.266-9.477,4.492-20.949,0c-11.23-4.234-6.484,0-16.957,0
+		c-10.773,0.266-5.984,3.992-16.957,1.496c-11.066-2.73-22.941,1-23.941,1c-0.625,0.02-2.492,2.492-10.973,0
+		c-8.402-2.23-11.969-4.992-14.961-4.992c-3.191-0.238-13.965,2.496-16.457,2.496c-2.484,0.266-3.992,3.492-11.973,1
+		c-7.762-2.234-7.48-3.992-8.477-3.992c-0.785,0.258-6.484-4.492-9.977-2.996c-3.559,1.754-14.215-1.246-9.727-1.246
+		c0.168,0-7.016-0.25-8.082,2.746V217.621z"/>
+	<path fill="#FFFFFF" fill-opacity="0.2431" d="M38.27,25.754h282v192.75l-141,34.5l-141-34.5V25.754z"/>
+	<path fill="#FDE9D0" stroke="#EACD98" stroke-linejoin="bevel" stroke-miterlimit="10" d="M39,9.566h-9v216.75l149.25,38.25
+		l150-38.25V9.566h-9v208.5l-141,34.5L39,218.066V9.566z"/>
+</g>
+</svg>

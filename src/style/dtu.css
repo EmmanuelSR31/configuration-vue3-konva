@@ -1,0 +1,163 @@
+.child-device-con {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.child-device {
+  margin: 0 20px;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.child-device-img {
+  height: 90px;
+  border: 1px solid #dedede;
+}
+
+.child-device-img img {
+  width: 118px;
+  height: 88px;
+}
+
+.child-device-empty {
+  height: 88px;
+  background-color: #ececec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+
+.child-device-name {
+  padding-top: 8px;
+  text-align: center;
+  font-size: 15px;
+  height: 31px;
+  overflow: hidden;
+}
+
+.child-device-selected {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  width: 30px;
+  height: 30px;
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #009944;
+  color: #fff;
+  padding-top: 5px;
+  padding-left: 3px;
+}
+
+.dtu-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dtu-li {
+  width: 360px;
+  height: 200px;
+  margin: 0 10px 20px 10px;
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.dtu-li-top {
+  padding: 10px 10px 5px 10px;
+  border-bottom: 1px dashed #dedede;
+}
+
+.dtu-li-dropdown {
+  float: right;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.dtu-li-dropdown a {
+  display: inline-flex;
+  align-items: center;
+  color: #333;
+}
+
+.dtu-li-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dtu-li-name div {
+  display: flex;
+  align-items: center;
+}
+
+.dtu-li-name span {
+  display: inline-block;
+  max-width: 250px;
+  height: 28px;
+  overflow: hidden;
+}
+
+.dtu-li-code {
+  color: #999;
+}
+
+.dtu-li-state {
+  padding: 0 10px 10px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.dtu-li-state span {
+  margin-right: 15px;
+}
+
+.dtu-li-state-icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.dtu-li-list {
+  display: flex;
+  padding: 10px 5px 0 5px;
+}
+
+.dtu-li-list .child-device {
+  margin: 0 2px;
+  width: 120px;
+  height: 90px;
+}
+
+.dtu-li-list .child-device-img {
+  height: 60px;
+}
+
+.dtu-li-list .child-device-img img {
+  width: 100%;
+  height: 58px;
+}
+
+.dtu-li-list .child-device-empty {
+  height: 58px;
+  background-color: #ececec;
+}
+
+.dtu-li-list .child-device-name {
+  font-size: 12px;
+  padding-top: 5px;
+  height: 24px;
+  text-align: center;
+  overflow: hidden;
+}

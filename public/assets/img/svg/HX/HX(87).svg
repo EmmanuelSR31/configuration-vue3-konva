@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg preserveAspectRatio="none"   version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="440.312px" height="566.085px" viewBox="63.309 0.309 440.312 566.085"
+	 enable-background="new 63.309 0.309 440.312 566.085" xml:space="preserve">
+<g id="surface76">
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="789.3081" y1="166.5571" x2="202.2251" y2="166.5571" gradientTransform="matrix(0.75 0 0 -0.75 -88.361 665.2482)">
+		<stop  offset="0" style="stop-color:#6490AE"/>
+		<stop  offset="0.15" style="stop-color:#94C7EC"/>
+		<stop  offset="0.25" style="stop-color:#CAE1F4"/>
+		<stop  offset="0.52" style="stop-color:#77AACE"/>
+		<stop  offset="0.69" style="stop-color:#6997B7"/>
+		<stop  offset="0.8" style="stop-color:#638FAD"/>
+		<stop  offset="0.92" style="stop-color:#5D86A3"/>
+		<stop  offset="1" style="stop-color:#6C9BBB"/>
+	</linearGradient>
+	<path fill="url(#SVGID_1_)" d="M64.809,514.269h437.25c0.75,0,1.563,0.777,1.563,1.734l-0.063,48.516
+		c0,0.75-0.715,1.875-1.676,1.875l-437.074-0.375c-0.75,0-1.5-0.438-1.5-1.391v-48.859c0-0.75,0.707-1.5,1.668-1.5H64.809z"/>
+	
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="202.2266" y1="-31.1973" x2="736.2261" y2="-31.1973" gradientTransform="matrix(0.75 0 0 -0.75 -68.4 317.2501)">
+		<stop  offset="0" style="stop-color:#B8B8B8;stop-opacity:0.7569"/>
+		<stop  offset="0.17" style="stop-color:#E7E7E7;stop-opacity:0.702"/>
+		<stop  offset="0.68" style="stop-color:#FFFFFF;stop-opacity:0.7922"/>
+		<stop  offset="0.83" style="stop-color:#FFFFFF;stop-opacity:0.7137"/>
+		<stop  offset="1" style="stop-color:#B8B8B8;stop-opacity:0.6314"/>
+	</linearGradient>
+	<path fill="url(#SVGID_2_)" d="M83.27,515.023h400.5v-348.75H83.27V515.023z"/>
+	
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="469.2261" y1="201.3018" x2="469.2261" y2="50.3018" gradientTransform="matrix(0.75 0 0 -0.75 -68.4 206.422)">
+		<stop  offset="0" style="stop-color:#5F89A6"/>
+		<stop  offset="0.01" style="stop-color:#AAD1EF"/>
+		<stop  offset="0.02" style="stop-color:#7EB3D8"/>
+		<stop  offset="0.64" style="stop-color:#7CB0D5"/>
+		<stop  offset="0.99" style="stop-color:#79ACD0"/>
+		<stop  offset="1" style="stop-color:#587F9A"/>
+	</linearGradient>
+	<path fill="url(#SVGID_3_)" d="M83.27,168.695h400.5l-177-113.25h-46.5L83.27,168.695z"/>
+	
+		<linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="263.2246" y1="163.7842" x2="202.1465" y2="163.7842" gradientTransform="matrix(0.75 0 0 -0.75 109.0302 151.2853)">
+		<stop  offset="0" style="stop-color:#6490AE"/>
+		<stop  offset="0.15" style="stop-color:#94C7EC"/>
+		<stop  offset="0.25" style="stop-color:#CAE1F4"/>
+		<stop  offset="0.52" style="stop-color:#77AACE"/>
+		<stop  offset="0.69" style="stop-color:#6997B7"/>
+		<stop  offset="0.8" style="stop-color:#638FAD"/>
+		<stop  offset="0.92" style="stop-color:#5D86A3"/>
+		<stop  offset="1" style="stop-color:#6C9BBB"/>
+	</linearGradient>
+	<path fill="url(#SVGID_4_)" d="M262.199,0.309h42c1.5,0,2.031,0.773,2.031,1.73l0.219,53.02c0,0.75-1.031,1.527-1.992,1.527
+		l-42.257-0.027c-0.75,0-1.559-0.781-1.559-1.738l0.059-53.012c0-0.75,0.719-1.5,1.68-1.5H262.199z"/>
+	
+		<linearGradient id="SVGID_5_" gradientUnits="userSpaceOnUse" x1="479.2241" y1="201.3027" x2="479.2241" y2="173.3018" gradientTransform="matrix(0.75 0 0 -0.75 -75.8488 317.2501)">
+		<stop  offset="0" style="stop-color:#527EA5"/>
+		<stop  offset="0.01" style="stop-color:#9FC6EE"/>
+		<stop  offset="0.02" style="stop-color:#6CA6D7"/>
+		<stop  offset="0.64" style="stop-color:#6AA3D3"/>
+		<stop  offset="0.99" style="stop-color:#689FCE"/>
+		<stop  offset="1" style="stop-color:#4B7599"/>
+	</linearGradient>
+	<path fill="url(#SVGID_5_)" d="M75.82,187.273h415.5v-21H75.82V187.273z"/>
+</g>
+</svg>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg preserveAspectRatio="none"   version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="422.25px" height="562.5px" viewBox="72.402 2.047 422.25 562.5" enable-background="new 72.402 2.047 422.25 562.5"
+	 xml:space="preserve">
+<pattern  x="183.964" y="383.964" width="494" height="687" patternUnits="userSpaceOnUse" id="pattern0" viewBox="0 -687 494 687" overflow="visible">
+	<g>
+		<polygon fill="none" points="0,0 494,0 494,-687 0,-687 		"/>
+		<g>
+			
+				<image overflow="visible" enable-background="new    " width="494" height="687" id="image20_1_" xlink:href="544CB2A6.jpg"  transform="matrix(1 0 0 -1 0 0)">
+			</image>
+		</g>
+	</g>
+</pattern>
+<g id="surface16">
+	<path fill="#7494A5" d="M72.402,2.047h422.25v562.5H72.402V2.047z"/>
+	<path fill="#B1CAD8" d="M76.348,560.921v-555h21v555H76.348z"/>
+	<path fill="#B1CAD8" d="M76.348,6.008h413.25v21H76.348V6.008z"/>
+	<path fill="#B1CAD8" d="M468.199,560.921v-555h21v555H468.199z"/>
+	<path fill="#B1CAD8" d="M76.348,539.796h413.25v21H76.348V539.796z"/>
+	<pattern  id="SVGID_1_" xlink:href="#pattern0" patternTransform="matrix(0.75 0 0 -0.75 -2137.4355 -14764.9922)">
+	</pattern>
+	<path fill="url(#SVGID_1_)" d="M97.418,25.715h370.5v515.25h-370.5V25.715z"/>
+	<path fill="none" stroke="#7792A2" stroke-linejoin="bevel" stroke-miterlimit="10" d="M76.348,6.008l21,19.5"/>
+	<path fill="none" stroke="#7792A2" stroke-linejoin="bevel" stroke-miterlimit="10" d="M489.601,6.008l-21.75,19.5"/>
+	<path fill="none" stroke="#7792A2" stroke-linejoin="bevel" stroke-miterlimit="10" d="M489.601,560.558l-21.75-19.5"/>
+	<path fill="none" stroke="#7792A2" stroke-linejoin="bevel" stroke-miterlimit="10" d="M76.348,560.558l21-19.5"/>
+</g>
+</svg>

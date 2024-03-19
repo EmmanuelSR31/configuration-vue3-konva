@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg preserveAspectRatio="none" version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="299.735px" height="337.195px" viewBox="29.5 -50.332 299.735 337.195"
+	 enable-background="new 29.5 -50.332 299.735 337.195" xml:space="preserve">
+<g id="surface406">
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="106.8235" y1="509.7295" x2="52.6458" y2="509.7295" gradientTransform="matrix(0.75 0 0 0.75 249.1171 -297.9805)">
+		<stop  offset="0" style="stop-color:#A5906A"/>
+		<stop  offset="0.03" style="stop-color:#EED8B3"/>
+		<stop  offset="0.08" style="stop-color:#D7BD8C"/>
+		<stop  offset="0.64" style="stop-color:#D4BA89"/>
+		<stop  offset="0.95" style="stop-color:#CFB586"/>
+		<stop  offset="1" style="stop-color:#9A8662"/>
+	</linearGradient>
+	<path fill="url(#SVGID_1_)" d="M290.102,41.566h37.5c0.75,0,1.633,0.734,1.633,1.68l-0.133,81.57c0,1.5-0.668,1.969-1.613,1.969
+		l-37.387,0.281c-0.75,0-1.5-1.086-1.5-2.031V43.066c0-0.75,0.75-1.5,1.694-1.5H290.102z"/>
+	
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="115.6619" y1="498.7139" x2="52.6619" y2="498.714" gradientTransform="matrix(0.75 0 0 0.75 101.2372 -121.6816)">
+		<stop  offset="0" style="stop-color:#C4AA84"/>
+		<stop  offset="0.15" style="stop-color:#FFE0B3"/>
+		<stop  offset="0.25" style="stop-color:#FFEED7"/>
+		<stop  offset="0.44" style="stop-color:#DFC297"/>
+		<stop  offset="0.6" style="stop-color:#C7AD86"/>
+		<stop  offset="0.8" style="stop-color:#A89170"/>
+		<stop  offset="0.97" style="stop-color:#998566"/>
+		<stop  offset="1" style="stop-color:#CBB189"/>
+	</linearGradient>
+	<path fill="url(#SVGID_2_)" d="M140.723,217.863h47.25v69h-47.25V217.863z"/>
+	<path stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M30,85.168c0-75,60.074-135,134.238-135
+		c74.262,0,134.234,60.262,134.234,134.652c0.026,74.598-60.109,134.653-134.234,134.653C90,219.418,30,159.156,30,84.82V85.168z"/>
+	<path fill="#9E9F9F" d="M41.355,84.559c0-67.5,54.992-123,122.883-123c67.617,0,122.879,55.164,122.879,123.262
+		c0.238,67.988-55.023,123.258-122.879,123.258C96.105,208.309,41.355,152.867,41.355,84.82V84.559z"/>
+	<path fill="#EBEAE9" d="M45.277,84.742c0-66,53.238-119.25,118.961-119.25c65.539,0,118.957,53.406,118.957,119.328
+		c-0.168,65.922-53.266,119.329-118.957,119.329C98.527,203.992,45.277,150.695,45.277,84.82V84.742z"/>
+	<path stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M86.047,154.848l72-65.25c0,0,23.656-20.195,29-38.688
+		c0.25-0.313,3.207-5.895,9.121,0l9.879,13.188c0,0,5.316,7.984-3.5,7.984c-0.25,0.266-20.043,5.09-40.883,23.313L86.047,154.848z"
+		/>
+	<path stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M157.941,86.387c0-5.25,4.348-9.75,9.742-9.75
+		c5.258,0,9.746,4.379,9.746,9.801c0.012,5.199-4.367,9.762-9.746,9.762c-5.242-0.063-9.742-4.379-9.742-9.762V86.387z"/>
+	
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="68.3215" y1="460.5557" x2="52.6233" y2="460.5557" gradientTransform="matrix(0.75 0 0 0.75 122.3129 -258.9893)">
+		<stop  offset="0" style="stop-color:#C4AA84"/>
+		<stop  offset="0.15" style="stop-color:#FFE0B3"/>
+		<stop  offset="0.25" style="stop-color:#FFEED7"/>
+		<stop  offset="0.44" style="stop-color:#DFC297"/>
+		<stop  offset="0.6" style="stop-color:#C7AD86"/>
+		<stop  offset="0.8" style="stop-color:#A89170"/>
+		<stop  offset="0.97" style="stop-color:#998566"/>
+		<stop  offset="1" style="stop-color:#CBB189"/>
+	</linearGradient>
+	<path fill="url(#SVGID_3_)" d="M161.797,86.559c0-3.75,2.617-6.035,5.863-6.035c3.137,0.035,5.879,2.641,5.879,5.895
+		c0.258,3.141-2.633,5.898-5.879,5.898c-3.613,0.242-5.879-2.641-5.879-5.898L161.797,86.559z"/>
+	<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M216.676-12.332l-8.25,15"/>
+	<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M114.902-12.332l7.5,15"/>
+	<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M258.391,72.133l17.25-3"/>
+	<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M231.137,153.816l12,12"/>
+	<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M97.305,146.582l-15,12.75"/>
+	<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M72.781,72.938l-18-3"/>
+	<path stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M139.227,165.34h50.25v24h-50.25V165.34z"/>
+	<path fill="none" stroke="#FFFFFF" stroke-width="0.75" stroke-linejoin="bevel" stroke-miterlimit="10" d="M143.395,168.875h42
+		v16.5h-42V168.875z"/>
+	<path fill="#FFFFFF" fill-opacity="0.7255" d="M221.961,123.207c53.25-81.75-8.565-151.5-8.565-151.5
+		c43.065,19.5,73.754,62.559,73.754,113.113c0.063,68.387-55.056,123.297-122.896,123.297c-26.293-0.16-51.207-8.48-71.293-22.883
+		c3,2.473,75.117,20.301,128.824-61.699L221.961,123.207z"/>
+</g>
+</svg>

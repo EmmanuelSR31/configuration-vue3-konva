@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg preserveAspectRatio="none" version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="562.996px" height="437.511px" viewBox="3.625 127.375 562.996 437.511"
+	 enable-background="new 3.625 127.375 562.996 437.511" xml:space="preserve">
+<g id="surface161">
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="418.2231" y1="166.3066" x2="202.2231" y2="166.3066" gradientTransform="matrix(0.75 0 0 -0.75 -55.1603 509.7404)">
+		<stop  offset="0" style="stop-color:#0A440E"/>
+		<stop  offset="0.68" style="stop-color:#56A45A"/>
+		<stop  offset="1" style="stop-color:#1E5423"/>
+	</linearGradient>
+	<path fill="url(#SVGID_1_)" stroke="#1C601F" stroke-width="0.25" stroke-linejoin="bevel" stroke-miterlimit="10" d="
+		M258.508,358.761h-162v52.5h136.5L258.508,358.761z"/>
+	
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="419.9731" y1="55.6597" x2="202.0898" y2="55.6596" gradientTransform="matrix(0.75 0 0 -0.75 83.7181 322.0509)">
+		<stop  offset="0" style="stop-color:#0A440E"/>
+		<stop  offset="0.68" style="stop-color:#56A45A"/>
+		<stop  offset="1" style="stop-color:#1E5423"/>
+	</linearGradient>
+	<path fill="url(#SVGID_2_)" stroke="#1C601F" stroke-width="0.25" stroke-linejoin="bevel" stroke-miterlimit="10" d="
+		M392.886,171.074h-105c0,0-55.265,0-52.5,67.664c0-0.164,0,150.8,0,150.8l48-0.215v-134.25c0,0,0.465-31.191,28.246-31.191
+		c28.004-0.309,87.066,0,87.066,0L392.886,171.074z"/>
+	
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="497.2222" y1="-79.6953" x2="202.2222" y2="-79.6953" gradientTransform="matrix(0.75 0 0 -0.75 193.578 278.4777)">
+		<stop  offset="0" style="stop-color:#0A440E"/>
+		<stop  offset="0.68" style="stop-color:#56A45A"/>
+		<stop  offset="1" style="stop-color:#1E5423"/>
+	</linearGradient>
+	<path fill="url(#SVGID_3_)" stroke="#1C601F" stroke-width="0.25" stroke-linejoin="bevel" stroke-miterlimit="10" d="
+		M345.246,127.5V270l84.75,279h51.75l84.75-279V127.5H345.246z"/>
+	
+		<linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="455.396" y1="74.4263" x2="202.2251" y2="74.4262" gradientTransform="matrix(0.75 0 0 -0.75 12.2172 509.7404)">
+		<stop  offset="0" style="stop-color:#0A440E"/>
+		<stop  offset="0.68" style="stop-color:#56A45A"/>
+		<stop  offset="1" style="stop-color:#1E5423"/>
+	</linearGradient>
+	<path fill="url(#SVGID_4_)" stroke="#1C601F" stroke-width="0.25" stroke-linejoin="bevel" stroke-miterlimit="10" d="
+		M163.887,454.011c0-52.5,42.504-95.25,94.941-95.25c52.058,0,94.937,42.605,94.937,95.16c-0.129,52.59-42.504,95.16-94.937,95.16
+		c-52.191,0.18-94.941-42.605-94.941-95.16V454.011z"/>
+	
+		<linearGradient id="SVGID_5_" gradientUnits="userSpaceOnUse" x1="490.1606" y1="125.8423" x2="204.23" y2="125.8423" gradientTransform="matrix(0.75 0 0 -0.75 -90.545 585.9366)">
+		<stop  offset="0" style="stop-color:#0A440E"/>
+		<stop  offset="0.68" style="stop-color:#56A45A"/>
+		<stop  offset="1" style="stop-color:#1E5423"/>
+	</linearGradient>
+	<path fill="url(#SVGID_5_)" stroke="#1C601F" stroke-width="0.25" stroke-linejoin="bevel" stroke-miterlimit="10" d="
+		M74.625,492.707c36.75-12.75,161.398-55.359,183.777-55.582c22.473,0.082,26.648,32.09,1.516,43.75
+		c-17.293,8.082-136.477,54.766-162.371,63.992c-25.172,9.34-50.824-42.551-22.551-52.48L74.625,492.707z"/>
+	
+		<linearGradient id="SVGID_6_" gradientUnits="userSpaceOnUse" x1="950.2241" y1="190.8052" x2="202.2251" y2="190.8051" gradientTransform="matrix(0.75 0 0 -0.75 -147.9196 699.9884)">
+		<stop  offset="0" style="stop-color:#0A440E"/>
+		<stop  offset="0.68" style="stop-color:#56A45A"/>
+		<stop  offset="1" style="stop-color:#1E5423"/>
+	</linearGradient>
+	<path fill="url(#SVGID_6_)" stroke="#1C601F" stroke-width="0.25" stroke-linejoin="bevel" stroke-miterlimit="10" d="
+		M564.75,564.761h-561v-15.75h561V564.761z"/>
+</g>
+</svg>
