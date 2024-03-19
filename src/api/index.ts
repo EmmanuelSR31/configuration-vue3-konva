@@ -1,8 +1,7 @@
 import Util from '@/utils/index'
-import ipJons from '@/../public/assets/json/ip.json'
 
 // 配置API接口地址
-const root:any = ipJons
+const root:any = window.webConfig
 
 // 引用axios
 import axios from 'axios'

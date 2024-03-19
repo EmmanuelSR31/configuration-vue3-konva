@@ -1,11 +1,10 @@
 import Util from '@/utils/index'
-import ipJons from '@/../public/assets/json/ip.json'
 import { getCurrentInstance, reactive, ref, computed } from 'vue'
 
 export default function () {
   const proxy: any = getCurrentInstance()!.proxy
   let user = reactive({ userName: '', userActualname: '', userPassword: '' }) // 登录用户
-  const uploadRoot = ref(ipJons.uploadRoot)
+  const uploadRoot = ref(window.webConfig.uploadRoot)
   let showModel = ref(false)
   let token = sessionStorage.token
   const util = computed(() => Util)
