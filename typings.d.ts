@@ -1,3 +1,3 @@
 interface Window {
-  webConfig: { commonRoot: string, uploadRoot: string };
+  webConfig: { [key: string]: string };
 }

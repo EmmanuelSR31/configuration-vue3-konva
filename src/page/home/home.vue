@@ -81,7 +81,7 @@
 <script lang="ts">
 import common from '@/page/mixins/common' // 基本混入
 import { IInterfaceData } from '@/page/interface/interface'
-import { getCurrentInstance, ref } from 'vue'
+import { getCurrentInstance, ref, onBeforeUnmount } from 'vue'
 import * as echarts from 'echarts'
 export default {
   setup () {
@@ -275,6 +275,10 @@ export default {
       }
       return temp
     }
+    onBeforeUnmount(() => {
+      clearInterval(dayTimer.value)
+      clearInterval(timer.value)
+    })
     return {
       deviceObj, dataObj, dayDataObj, interfaceObj, getSizeStr, getCountStr
     }

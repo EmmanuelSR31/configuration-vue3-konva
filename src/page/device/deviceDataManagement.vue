@@ -23,6 +23,50 @@
       <device-data-history :obj="obj"></device-data-history>
     </n-tab-pane>
   </n-tabs>
+  <n-modal title="数据持久化" v-model:show="storageModal" preset="card" style="width: 600px;" :mask-closable="false" :close-on-esc="false">
+    <div class="modal-form">
+      <div class="table-tip">开启数据持久化后，历史数据将会写入数据库中，请注意数据存储盘剩余空间大小。</div>
+      <n-form ref="formValidate" :model="storageObj" label-placement="left" label-width="90px" require-mark-placement="left">
+        <n-form-item label="持久化方式">
+          <n-select v-model:value="storageObj.deviceDataStorageType" placeholder="请选择设持久化方式" filterable clearable :options="deviceDataStorageTypeList" value-field="id" label-field="text"></n-select>
+        </n-form-item>
+        <n-form-item label="循环秒数" v-show="storageObj.deviceDataStorageType === 'Cycle'">
+          <n-input-number v-model:value="storageObj.saveCycleSecond" :min="1" placeholder="请输入循环秒数"></n-input-number>
+        </n-form-item>
+      </n-form>
+      <div class="modal-btn">
+        <n-button type="primary" @click="saveStorage()">确定</n-button>
+      </div>
+    </div>
+  </n-modal>
+  <n-modal title="数据写入" v-model:show="setDataModal" preset="card" style="width: 400px;" :mask-closable="false" :close-on-esc="false">
+    <div class="modal-form">
+      <n-form ref="formValidate" :model="setDataObj" label-placement="left" label-width="60px" require-mark-placement="left">
+        <n-form-item label="写入值">
+          <n-input v-model:value="setDataObj.value" placeholder="请输入写入值"></n-input>
+        </n-form-item>
+      </n-form>
+      <div class="modal-btn">
+        <n-button type="primary" @click="setData()">确定</n-button>
+      </div>
+    </div>
+  </n-modal>
+  <n-modal title="二次授权" v-model:show="loginModal" preset="card" style="width: 400px;" :mask-closable="false" :close-on-esc="false">
+    <div class="modal-form">
+      <div class="table-tip">您不能向设备写入数据，请输入账号密码进行二次授权。<br>每次授权时长为10分钟。</div>
+      <n-form ref="formValidate" :model="loginObj" label-placement="left" label-width="60px" require-mark-placement="left">
+        <n-form-item label="用户名">
+          <n-input v-model:value="loginObj.userName" placeholder="请输入用户名"></n-input>
+        </n-form-item>
+        <n-form-item label="密码">
+          <n-input v-model:value="loginObj.userPassword" type="password" placeholder="请输入密码"></n-input>
+        </n-form-item>
+      </n-form>
+      <div class="modal-btn">
+        <n-button type="primary" @click="login()">确定</n-button>
+      </div>
+    </div>
+  </n-modal>
 </n-modal>
 </template>
 <script lang="ts">
@@ -49,6 +93,15 @@ export default {
     const proxy: any = getCurrentInstance()!.proxy
     let { util, showModel } = common()
     let { loading, totalRows, data, searchArr, tableHeight, search } = table()
+    type RowData = {
+      sort: number
+      dataName: string
+      dataNote: string
+      dataUnit: string
+      value: string
+      updateDate: string
+      deviceDataStorageType: string
+    }
     // 表格表头
     const columns = ref([
       {
@@ -82,7 +135,7 @@ export default {
         title: '值时间',
         key: 'updateDate',
         width: 170,
-        render: (row: any) => {
+        render: (row: RowData): any => {
           let temp = ''
           if (!util.value.isEmpty(row.updateDate)) {
             temp = row.updateDate.substring(0, 19)
@@ -92,23 +145,35 @@ export default {
       },
       {
         title: '数据持久化',
-        key: 'isStorage',
+        key: 'deviceDataStorageType',
         width: 110,
         align: 'center',
-        render: (row: any) => {
+        render: (row: RowData): any => {
           return h('a', {
-            props: {
-              href: 'javascript:void()'
-            },
+            href: 'javascript:void()',
             style: {
-              color: row.isStorage ? '#00CC33' : '#CC3333'
+              color: row.deviceDataStorageType !== 'Disable' ? '#00CC33' : '#CC3333'
             },
-            on: {
-              click: () => {
-                setStorage(row)
-              }
+            onClick: () => {
+              setStorage(row)
             }
-          }, row.isStorage ? '是' : '否')
+          }, row.deviceDataStorageType !== 'Disable' ? '是' : '否')
+        }
+      },
+      {
+        title: '写入',
+        key: 'deviceDataStorageType',
+        width: 90,
+        align: 'center',
+        render: (row: RowData): any => {
+          return h('a', {
+            href: 'javascript:void()',
+            style: {
+            },
+            onClick: () => {
+              openSetData(row)
+            }
+          }, '写入')
         }
       },
       {
@@ -116,7 +181,7 @@ export default {
         key: 'action',
         width: 120,
         align: 'center',
-        render: (row: any) => {
+        render: (row: RowData): any => {
           return h('div', [
             h('a', {
               href: 'javascript:void(0)',
@@ -142,6 +207,15 @@ export default {
     */
     function init () {
       showModel.value = true
+      proxy.$api.get('commonRoot', '/dsa/api/data/enum/DeviceDataStorageType', {}, (r: IInterfaceData) => {
+        if (r.data.code === 0) {
+          for (const key in r.data.data) {
+            if (Object.prototype.hasOwnProperty.call(r.data.data, key)) {
+              deviceDataStorageTypeList.value.push({ id: key, text: r.data.data[key] })
+            }
+          }
+        }
+      })
     }
     init()
     /**
@@ -196,18 +270,21 @@ export default {
         }
       })
     }
+    let storageModal = ref(false)
+    let storageObj = ref({ deviceDataStorageType: '', saveCycleSecond: null, deviceDataId: '' })
+    let deviceDataStorageTypeList = ref<Array<{ id: string, text: string }>>([])
     /**
     * @desc 数据持久化
     */
     function setStorage (row: any) {
-      if (row.isStorage) {
+      if (row.deviceDataStorageType !== 'Disable') {
         proxy.$myMessage({
           type: 'info',
           submitText: '确定关闭',
           MessageTitle: '为了防止您误删除历史数据，系统将不会删除数据库中的数据，只会停止数据存储入磁盘。',
           submit: () => {
             proxy.$myLoading.show()
-            proxy.$api.post('commonRoot', '/dsa/api/data/storageModel/web/disable', { id: row.deviceDataId }, (r: IInterfaceData) => {
+            proxy.$api.post('commonRoot', '/dsa/api/data/storageModel/web/disable', { deviceDataId: row.deviceDataId }, (r: IInterfaceData) => {
               if (r.data.code === 0) {
                 proxy.$myMessage.success('关闭成功')
                 proxy.$refs.tablePage.changePage()
@@ -219,26 +296,84 @@ export default {
           }
         })
       } else {
-        proxy.$myMessage({
-          type: 'info',
-          submitText: '确定开启',
-          MessageTitle: '开启数据持久化后，历史数据将会写入数据库中，请注意数据存储盘剩余空间大小。',
-          submit: () => {
-            proxy.$myLoading.show()
-            proxy.$api.post('commonRoot', '/dsa/api/data/storageModel/web/disable', { id: row.deviceDataId }, (r: IInterfaceData) => {
-              if (r.data.code === 0) {
-                proxy.$myMessage.success('开启成功')
-                proxy.$refs.tablePage.changePage()
-              } else {
-                proxy.$myMessage.error1(r.data.msg)
-              }
-              proxy.$myLoading.close()
-            })
-          }
-        })
+        storageObj.value = { deviceDataStorageType: '', saveCycleSecond: null, deviceDataId: row.deviceDataId }
+        storageModal.value = true
       }
     }
-    return { showModel, loading, totalRows, data, searchArr, tableHeight, search, columns, init, changePage, add }
+    function saveStorage () {
+      if (util.value.isEmpty(storageObj.value.deviceDataStorageType)) {
+        proxy.$myMessage.error1('请选择持久化方式')
+        return false
+      }
+      if (util.value.isEmpty(storageObj.value.saveCycleSecond) && storageObj.value.deviceDataStorageType === 'Cycle') {
+        proxy.$myMessage.error1('请填写秒数')
+        return false
+      }
+      proxy.$myLoading.show()
+      proxy.$api.post('commonRoot', '/dsa/api/data/storageModel/web/enable', storageObj.value, (r: IInterfaceData) => {
+        if (r.data.code === 0) {
+          proxy.$myMessage.success('开启成功')
+          proxy.$refs.tablePage.changePage()
+          storageModal.value = false
+        } else {
+          proxy.$myMessage.error1(r.data.msg)
+        }
+        proxy.$myLoading.close()
+      })
+    }
+    let setDataModal = ref(false)
+    let setDataObj = ref({ value: '', deviceDataId: '', twiceAuthToken: '' })
+    let loginModal = ref(false)
+    let loginObj = ref({ userName: '', userPassword: '' })
+    function openSetData (row: any) {
+      setDataObj.value = { value: '', deviceDataId: row.deviceDataId, twiceAuthToken: sessionStorage.token }
+      setDataModal.value = true
+    }
+    function setData () {
+      if (util.value.isEmpty(setDataObj.value.value)) {
+        proxy.$myMessage.error1('请填写数值')
+        return false
+      }
+      proxy.$myLoading.show()
+      proxy.$api.post('commonRoot', '/mes/device/data/web/setData', setDataObj.value, (r: IInterfaceData) => {
+        if (r.data.code === 0) {
+          proxy.$myMessage.success('操作成功')
+          proxy.$refs.tablePage.changePage()
+          setDataModal.value = false
+        } else {
+          proxy.$myMessage.error1(r.data.msg)
+          if (r.data.msg.includes('二次授权')) {
+            setDataModal.value = false
+            loginObj.value = { userName: '', userPassword: '' }
+            loginModal.value = true
+          }
+        }
+        proxy.$myLoading.close()
+      })
+    }
+    function login () {
+      if (util.value.isEmpty(loginObj.value.userName)) {
+        proxy.$myMessage.error1('请填写用户名')
+        return false
+      }
+      if (util.value.isEmpty(loginObj.value.userPassword)) {
+        proxy.$myMessage.error1('请填写密码')
+        return false
+      }
+      proxy.$myLoading.show()
+      proxy.$api.get('commonRoot', '/module/twiceAuth/create', loginObj.value, (r: IInterfaceData) => {
+        if (r.data.code === 0) {
+          proxy.$myMessage.success('授权成功，授权时长为10分钟')
+          sessionStorage.token = r.data.data.twiceAuthToken
+          loginModal.value = false
+        } else {
+          proxy.$myMessage.error1(r.data.msg)
+        }
+        proxy.$myLoading.close()
+      })
+    }
+    return { showModel, loading, totalRows, data, searchArr, tableHeight, search, columns, init, changePage, add, storageModal, storageObj, deviceDataStorageTypeList,
+      saveStorage, setDataModal, setDataObj, setData, loginModal, loginObj, login }
   }
 }
 </script>

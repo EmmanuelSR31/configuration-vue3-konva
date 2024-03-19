@@ -1,8 +1,8 @@
 <template>
   <div class="upload-com">
-    <div class="upload-li upload-li-single" v-if="dataObj.ossId !== null && dataObj.ossId !== undefined && dataObj.ossId !== ''">
-      <n-image v-if="isImg" :style="{height: imgHeight + 'px'}" v-show="dataObj.ossId !== null && dataObj.ossId !== undefined && dataObj.ossId !== ''" :src="uploadRoot + '/oss/' + dataObj.relativePath"></n-image>
-      <div v-if="!isImg" v-show="dataObj.ossId !== null && dataObj.ossId !== undefined && dataObj.ossId !== ''">
+    <div class="upload-li upload-li-single" v-if="dataObj.relativePath !== null && dataObj.relativePath !== undefined && dataObj.relativePath !== ''">
+      <n-image v-if="isImg" :style="{height: imgHeight + 'px'}" v-show="dataObj.relativePath !== null && dataObj.relativePath !== undefined && dataObj.relativePath !== ''" :src="uploadRoot + '/oss/' + dataObj.relativePath"></n-image>
+      <div v-if="!isImg" v-show="dataObj.relativePath !== null && dataObj.relativePath !== undefined && dataObj.relativePath !== ''">
         <a :href="uploadRoot + '/oss/' + dataObj.relativePath" target="_blank">{{dataObj.fileName !== null && dataObj.fileName !== undefined ? dataObj.fileName : '文件'}}</a>
       </div>
       <n-icon v-if="editable" class="upload-li-del" @click="delFile()" title="删除" size="20"><close-circle-outline /></n-icon>

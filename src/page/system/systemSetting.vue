@@ -32,7 +32,7 @@ import { FormInst } from 'naive-ui'
 import uploadSingle from '@/page/components/uploadSingle.vue'
 export default {
   components: { uploadSingle },
-  setup (props) {
+  setup () {
     const proxy: any = getCurrentInstance()!.proxy
     let { util, uploadRoot } = common()
     const formValidate = ref<FormInst | null>(null)

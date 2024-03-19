@@ -3,7 +3,7 @@
     <div class="config-header">
       <a href="javascript:void(0)">{{basicSettings.name}}</a>
       <span class="config-header-btn">
-        <!-- <a @click="viewConfig" style="" href="javascript:void(0);">预览</a> -->
+        <a @click="viewConfig" style="" href="javascript:void(0);">预览</a>
         <a @click="closeConfig" href="javascript:void(0);">关闭</a>
         <a @click="saveConfig" href="javascript:void(0);">保存</a>
       </span>
@@ -11,11 +11,11 @@
     <div class="config-con">
       <div class="config-left">
         <ul>
-          <li :class="{'active': curItemListType === 'common'}" @click="setCurItemListType('common')"><a href="javascript:void(0)"><br>基本</a></li>
-          <li :class="{'active': curItemListType === 'chart'}" @click="setCurItemListType('chart')"><a href="javascript:void(0)"><br>组件</a></li>
-          <li :class="{'active': curItemListType === 'device'}" @click="setCurItemListType('device')"><a href="javascript:void(0)"><br>图库</a></li>
-          <li :class="{'active': curItemListType === 'img'}" @click="setCurItemListType('img')"><a href="javascript:void(0)"><br>图形</a></li>
-          <li :class="{'active': curItemListType === 'canvas'}" @click="setCurItemListType('canvas')"><a href="javascript:void(0)"><br>动画</a></li>
+          <li :class="{'active': curItemListType === 'common'}" @click="setCurItemListType('common')"><a href="javascript:void(0)">基本</a></li>
+          <li :class="{'active': curItemListType === 'chart'}" @click="setCurItemListType('chart')"><a href="javascript:void(0)">组件</a></li>
+          <li :class="{'active': curItemListType === 'device'}" @click="setCurItemListType('device')"><a href="javascript:void(0)">图库</a></li>
+          <li :class="{'active': curItemListType === 'img'}" @click="setCurItemListType('img')"><a href="javascript:void(0)">图形</a></li>
+          <li :class="{'active': curItemListType === 'canvas'}" @click="setCurItemListType('canvas')"><a href="javascript:void(0)">动画</a></li>
         </ul>
       </div>
       <div class="config-item-con" v-show="itemListShow">
@@ -1074,6 +1074,12 @@ export default {
     function closeConfig () {
       proxy.$emit('close')
     }
+    function viewConfig () {
+      let routeUrl = proxy.$router.resolve({
+        path: 'viewConfig/' + id.value
+      })
+      window.open(routeUrl.href)
+    }
     return { util, uploadRoot, commonItems, chartItems, svgItems, imgItems, canvasItems, switchs, svgItemsTypeTitle, curItemListType, itemListShow,
       deviceItemTypeShow, fontFamilys,
       init, setCurItemListType, toggleDeviceItemType, setSvgItems, dragstartLeft, drop, items,
@@ -1087,7 +1093,7 @@ export default {
       rightShow, toggleRight, refreshDraw,
       deviceList, deviceDataList, selectDevice, renderDeviceDataLabel, selectDeviceData, statusColumns, statusData, addStatusData,
       basicSettings, getBasicStyle, upBackSuccess,
-      saveConfig, closeConfig }
+      saveConfig, closeConfig, viewConfig }
   }
 }
 </script>

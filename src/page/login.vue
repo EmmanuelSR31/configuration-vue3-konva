@@ -1,5 +1,5 @@
 <template>
-<div class="login" @keydown.enter="login">
+<div class="login" @keydown.enter="login" :style="getStyle()">
   <div class="login-bg">
     <div class="login-div">
       <div class="login-title">{{systemObj.loginSystemName}}</div>
@@ -23,10 +23,12 @@
 </div>
 </template>
 <script lang="ts" setup>
+import common from '@/page/mixins/common' // 基本混入
 import { getCurrentInstance, reactive, ref } from 'vue'
 import { FormInst } from 'naive-ui'
 import { IInterfaceData } from '@/page/interface/interface'
 const proxy: any = getCurrentInstance()!.proxy
+let { util, uploadRoot } = common()
 const loginForm = ref<FormInst | null>(null)
 const loginObj = ref({ // 登录用户对象
   userName: '',
@@ -50,6 +52,13 @@ proxy.$api.get('commonRoot', '/module/skin/get', {}, (r: IInterfaceData) => {
     proxy.$myMessage.error(r.data.msg)
   }
 })
+function getStyle () {
+  let temp = ''
+  if (!util.value.isEmpty(systemObj.value.loginBackgroundRelativePath)) {
+    temp += 'background: url(' + uploadRoot.value + '/oss/' + systemObj.value.loginBackgroundRelativePath + ');background-size: 100% 100%'
+  }
+  return temp
+}
 /**
 * @desc 登录
 */

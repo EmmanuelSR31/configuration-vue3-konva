@@ -171,7 +171,7 @@ export default {
     * @param {Object} row 数据对象
     */
     function openEdit (e: any, row: any) {
-      editObj.value = row
+      editObj.value = util.value.deepClone(row)
       modalEdit.value = true
       e.stopPropagation()
     }

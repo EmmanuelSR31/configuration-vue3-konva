@@ -85,7 +85,7 @@ export default {
           }
         }
       })
-      proxy.$api.get('commonRoot', '/mes/device/data/web/list', {}, (r: IInterfaceData) => {
+      proxy.$api.get('commonRoot', '/mes/device/data/web/list', { deviceId: props.obj.deviceId }, (r: IInterfaceData) => {
         if (r.data.code === 0) {
           deviceDataList.value = r.data.data
         } else {

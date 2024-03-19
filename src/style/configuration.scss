@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'LcdD';
-  src: url(../../public/assets/LcdD.ttf);
+  src: url(/assets/LcdD.ttf);
 }
 .icon {
   width: 1em; height: 1em;
@@ -102,10 +102,10 @@
   overflow: auto;
   margin-left: 60px;
   position: absolute;
-  // background: url(../../../public/assets/img/config-temp.png) #f5f6fa center repeat;
+  // background: url(/assets/img/config-temp.png) #f5f6fa center repeat;
 }
 .config-center-bg {
-  background: url(../../../public/assets/img/drag-bg.png) center repeat;
+  background: url(/assets/img/drag-bg.png) center repeat;
 }
 .svg-div{
   img{

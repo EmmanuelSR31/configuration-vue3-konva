@@ -18,7 +18,7 @@
         <n-select v-model:value="dataObj.dataType" placeholder="请选择数据类型" :options="deviceDataTypeList" value-field="id" label-field="text"></n-select>
       </n-form-item>
       <n-form-item label="排序" path="sort">
-        <n-input v-model:value="dataObj.sort" placeholder="请输入排序" :disabled="method === 'view'"></n-input>
+        <n-input-number v-model:value="dataObj.sort" placeholder="请输入排序" :disabled="method === 'view'"></n-input-number>
       </n-form-item>
       <n-form-item label="数采终端" path="dtuId">
         <n-select v-model:value="dataObj.dtuId" @update:value="selectDtu" placeholder="请选择数采终端" filterable :options="dtuList" value-field="dtuId" label-field="dtuName"></n-select>
@@ -107,12 +107,20 @@ export default {
             dtuList.value.push({ dtuId: iterator.dtuId, dtuName: iterator.dtuName })
           }
           if (props.method !== 'add') {
-            if (!util.value.isEmpty(dataObj.value.dtuId) && dtuList.value.length > 0) {
-              selectDtu(dataObj.value.dtuId)
-            }
-            if (!util.value.isEmpty(dataObj.value.dtuChildId)) {
-              selectDtuChild(dataObj.value.dtuChildId, {}, true)
-            }
+            proxy.$api.get('commonRoot', '/mes/device/data/web/one', { id: props.obj.deviceDataId }, (r: IInterfaceData) => {
+              if (r.data.code === 0) {
+                dataObj.value = r.data.data
+                dataObj.value.dtuChildDataId = r.data.data.dtuDataLinker.dtuChildDataId
+                if (!util.value.isEmpty(dataObj.value.dtuId) && dtuList.value.length > 0) {
+                  selectDtu(dataObj.value.dtuId)
+                }
+                if (!util.value.isEmpty(dataObj.value.dtuChildId)) {
+                  selectDtuChild(dataObj.value.dtuChildId, {}, true)
+                }
+              } else {
+                proxy.$myMessage.error1(r.data.msg)
+              }
+            })
           }
         } else {
           proxy.$myMessage.error1(r.data.msg)
@@ -122,22 +130,6 @@ export default {
       if (props.method === 'add') {
         dataObj.value = util.value.deepClone(props.obj)
       } else {
-        proxy.$api.get('commonRoot', '/mes/device/data/web/one', { id: props.obj.deviceDataId }, (r: IInterfaceData) => {
-          if (r.data.code === 0) {
-            dataObj.value = r.data.data
-            dataObj.value.dtuId = r.data.data.dtuDataLinker.dtuChildData.dtuId
-            dataObj.value.dtuChildId = r.data.data.dtuDataLinker.dtuChildData.dtuChildId
-            dataObj.value.dtuChildDataId = r.data.data.dtuDataLinker.dtuChildDataId
-            if (!util.value.isEmpty(dataObj.value.dtuId) && dtuList.value.length > 0) {
-              selectDtu(dataObj.value.dtuId)
-            }
-            if (!util.value.isEmpty(dataObj.value.dtuChildId)) {
-              selectDtuChild(dataObj.value.dtuChildId, {}, true)
-            }
-          } else {
-            proxy.$myMessage.error1(r.data.msg)
-          }
-        })
       }
     }
     init()
@@ -162,7 +154,7 @@ export default {
     function selectDtuChildData (value: string) {
       dataVal.value = dtuChildDataList.value.find(ele => ele.dtuChildDataId === value).dtuChildDataValue
     }
-    function codemirrorChange (e) {
+    function codemirrorChange (e: string) {
       dataObj.value.formula = e
     }
     /**

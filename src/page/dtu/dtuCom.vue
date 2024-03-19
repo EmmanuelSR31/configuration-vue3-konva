@@ -35,8 +35,8 @@
         <n-input-number v-model:value="dataObj.cycleSecond" :min="1" placeholder="请输入采集周期" style="width: 120px;" />
       </n-form-item>
       <n-form-item label="串口号" v-if="typeIncludes('WEIGH')" style="width: 100%;">
-        <div style="display: flex;align-items: center;">
-          <n-select v-model:value="dataObj.serialPort" placeholder="请选择串口号" :options="portList" value-field="id" label-field="text"></n-select>
+        <div style="width: 100%;display: flex;align-items: center;">
+          <n-select v-model:value="dataObj.serialPort" placeholder="请选择串口号" :options="portList" value-field="id" label-field="text" style="width: 140px;"></n-select>
           <div style="display: flex;font-size: 14px;align-items: center;margin-left: 20px;color: #999;"><n-icon size="22"><info-circle-outlined /></n-icon>提示：腾飞T1000默认波特率为1200</div>
           <div style="width: 140px;margin-left: 190px;text-align: right;">
             <n-button type="primary" @click="save">保存</n-button>
@@ -296,6 +296,14 @@ export default {
         }
       })
     }
+    type RowData = {
+      dtuChildDataId: string
+      dtuChildDataName: string
+      dtuChildDataNote: string
+      deviceDataType: string
+      dtuChildDataValue: string
+      updateDate: string
+    }
     // 表格表头
     const columns = ref([
       {
@@ -327,7 +335,7 @@ export default {
       {
         title: '值时间',
         key: 'updateDate',
-        render: (row: any): any => {
+        render: (row: RowData): any => {
           let temp = ''
           if (!util.value.isEmpty(row.updateDate)) {
             temp = row.updateDate.substring(0, 19)
@@ -340,7 +348,7 @@ export default {
         key: 'action',
         width: 140,
         align: 'center',
-        render: (row: any) => {
+        render: (row: RowData): any => {
           return h('div', [
             h('a', {
               href: 'javascript:void(0)',

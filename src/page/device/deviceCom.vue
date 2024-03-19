@@ -21,7 +21,7 @@
         <n-input v-model:value="dataObj.deviceModel" placeholder="请输入设备型号" :disabled="method === 'view'"></n-input>
       </n-form-item>
       <n-form-item label="排序" path="sort">
-        <n-input v-model:value="dataObj.sort" placeholder="请输入排序" :disabled="method === 'view'"></n-input>
+        <n-input-number v-model:value="dataObj.sort" placeholder="请输入排序" :disabled="method === 'view'"></n-input-number>
       </n-form-item>
     </n-form>
     <div class="modal-btn">

@@ -1,7 +1,7 @@
 import Util from '@/utils/index'
 
 // 配置API接口地址
-const root:any = window.webConfig
+const root = window.webConfig
 
 // 引用axios
 import axios from 'axios'

@@ -80,7 +80,7 @@ export default {
           for (const iterator of dtuAllList.value) {
             dtuList.value.push({ dtuId: iterator.dtuId, dtuName: iterator.dtuName })
           }
-          proxy.$api.get('commonRoot', '/dsa/api/linker/state/web/oneByDeviceId', { id: props.deviceId }, (r: IInterfaceData) => {
+          proxy.$api.get('commonRoot', '/dsa/api/linker/state/web/oneByDeviceId', { deviceId: props.deviceId }, (r: IInterfaceData) => {
             if (r.data.code === 0) {
               if (!util.value.isEmpty(r.data.data)) {
                 dataObj.value = r.data.data

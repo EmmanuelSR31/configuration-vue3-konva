@@ -1,26 +1,26 @@
 @font-face {
   font-family: 'douyuFont-2';
-  src: url("../../../public/assets/douyuFont-2.otf");
+  src: url("/assets/douyuFont-2.otf");
 }
 
 @font-face {
   font-family: 'DS-DIGIB-2';
-  src: url("../../../public/assets/DS-DIGIB-2.ttf");
+  src: url("/assets/DS-DIGIB-2.ttf");
 }
 
 @font-face {
   font-family: 'DS-DIGI-1';
-  src: url("../../../public/assets/DS-DIGI-1.ttf");
+  src: url("/assets/DS-DIGI-1.ttf");
 }
 
 @font-face {
   font-family: 'Milky Han Term CN Heavy Italic';
-  src: url("../../../public/assets/Milky Han Term CN Heavy Italic.ttf");
+  src: url("/assets/Milky Han Term CN Heavy Italic.ttf");
 }
 
 @font-face {
   font-family: 'SourceHanSansOLD-Regular';
-  src: url("../../../public/assets/SourceHanSansOLD-Regular.otf");
+  src: url("/assets/SourceHanSansOLD-Regular.otf");
 }
 
 .bi-bg {
@@ -28,7 +28,7 @@
   height: 1080px;
   /* width: 100%;
   height: 100%; */
-  background: url("../../../public/assets/img/bi/bg.jpg") center no-repeat;
+  background: url("/assets/img/bi/bg.jpg") center no-repeat;
   background-size: 100% 100%;
   color: #fff;
   position: relative;
@@ -38,7 +38,7 @@
 
 .bi-header {
   height: 124px;
-  background: url("../../../public/assets/img/bi/top-bg.png") center no-repeat;
+  background: url("/assets/img/bi/top-bg.png") center no-repeat;
   background-size: auto 100%;
   position: relative;
   display: flex;
@@ -70,6 +70,7 @@
   font-size: 42px;
   font-weight: 600;
   background-image: linear-gradient(#fff, #a8faff);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
@@ -87,7 +88,7 @@
   text-align: center;
   font-size: 12px;
   color: #b6ceef;
-  background: url("../../../public/assets/img/bi/exit-btn-bg.png") center no-repeat;
+  background: url("/assets/img/bi/exit-btn-bg.png") center no-repeat;
   background-size: 100% 100%;
 }
 
@@ -109,7 +110,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("../../../public/assets/img/bi/tab-bg.png") center no-repeat;
+  background: url("/assets/img/bi/tab-bg.png") center no-repeat;
   background-size: 100% 100%;
   cursor: pointer;
   margin: 0 5px;
@@ -119,18 +120,20 @@
   font-family: 'Milky Han Term CN Heavy Italic';
   font-size: 20px;
   background-image: linear-gradient(#a8faff, #fff);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
 }
 
 .bi-tab.active {
-  background: url("../../../public/assets/img/bi/tab-bg-active.png") center no-repeat;
+  background: url("/assets/img/bi/tab-bg-active.png") center no-repeat;
   background-size: 100% 100%;
 }
 
 .bi-tab.active span {
   background-image: linear-gradient(#5dfd4a, #eeffea);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
@@ -156,25 +159,25 @@
 
 .bi-card-454 {
   height: 256px;
-  background: url("../../../public/assets/img/bi/card-bg-454.png") center no-repeat;
+  background: url("/assets/img/bi/card-bg-454.png") center no-repeat;
   background-size: 100% 100%;
 }
 
 .bi-card-454-641 {
   height: 641px;
-  background: url("../../../public/assets/img/bi/card-bg-454-641.png") center no-repeat;
+  background: url("/assets/img/bi/card-bg-454-641.png") center no-repeat;
   background-size: 100% 100%;
 }
 
 .bi-card-455 {
   height: 909px;
-  background: url("../../../public/assets/img/bi/card-bg-455.png") center no-repeat;
+  background: url("/assets/img/bi/card-bg-455.png") center no-repeat;
   background-size: 100% 100%;
 }
 
 .bi-card-920 {
   height: 911px;
-  background: url("../../../public/assets/img/bi/card-bg-920.png") center no-repeat;
+  background: url("/assets/img/bi/card-bg-920.png") center no-repeat;
   background-size: 100% 100%;
 }
 
@@ -185,6 +188,7 @@
   font-family: 'douyuFont-2';
   padding-left: 80px;
   background-image: linear-gradient(#fff 30%, #45ccf8);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
@@ -289,7 +293,7 @@
 .bi-index-baojing-top {
   height: 36px;
   line-height: 38px;
-  background: url("../../../public/assets/img/bi/baojing-bg.png") center no-repeat;
+  background: url("/assets/img/bi/baojing-bg.png") center no-repeat;
   background-size: 100% 100%;
   padding: 0 10px;
   margin: 5px 0;
@@ -378,12 +382,12 @@
 }
 
 .bi-index-baojing-table .ivu-page.mini .ivu-page-prev {
-  background: url("../../../public/assets/img/bi/page-left.png") center no-repeat;
+  background: url("/assets/img/bi/page-left.png") center no-repeat;
   background-size: 100% 100%;
 }
 
 .bi-index-baojing-table .ivu-page.mini .ivu-page-next {
-  background: url("../../../public/assets/img/bi/page-right.png") center no-repeat;
+  background: url("/assets/img/bi/page-right.png") center no-repeat;
   background-size: 100% 100%;
 }
 
@@ -491,6 +495,7 @@
 
 .bi-chart-title div {
   background-image: linear-gradient(#fff 30%, #45ccf8);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
@@ -502,7 +507,7 @@
 .bi-chart-con {
   width: 436px;
   height: 270px;
-  background: url("../../../public/assets/img/bi/chart-bg.png") center no-repeat;
+  background: url("/assets/img/bi/chart-bg.png") center no-repeat;
   background-size: 100% 100%;
   margin: 0 8px 12px 8px;
   padding-top: 10px;

@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'LcdD';
-  src: url(../../public/assets/LcdD.ttf);
+  src: url(/assets/LcdD.ttf);
 }
 
 .icon {
@@ -121,7 +121,7 @@
 }
 
 .config-center-bg {
-  background: url(../../../public/assets/img/drag-bg.png) center repeat;
+  background: url(/assets/img/drag-bg.png) center repeat;
 }
 
 .svg-div img {
