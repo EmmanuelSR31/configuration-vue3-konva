@@ -110,7 +110,7 @@ export default {
             proxy.$api.get('commonRoot', '/mes/device/data/web/one', { id: props.obj.deviceDataId }, (r: IInterfaceData) => {
               if (r.data.code === 0) {
                 dataObj.value = r.data.data
-                dataObj.value.dtuChildDataId = r.data.data.dtuDataLinker.dtuChildDataId
+                // dataObj.value.dtuChildDataId = r.data.data.dtuDataLinker.dtuChildDataId
                 if (!util.value.isEmpty(dataObj.value.dtuId) && dtuList.value.length > 0) {
                   selectDtu(dataObj.value.dtuId)
                 }
@@ -152,7 +152,10 @@ export default {
     }
     let dataVal = ref('')
     function selectDtuChildData (value: string) {
-      dataVal.value = dtuChildDataList.value.find(ele => ele.dtuChildDataId === value).dtuChildDataValue
+      let temp = dtuChildDataList.value.find(ele => ele.dtuChildDataId === value)
+      dataVal.value = temp.dtuChildDataValue
+      dataObj.value.dataName = temp.dtuChildDataNote
+      dataObj.value.dataType = temp.deviceDataType
     }
     function codemirrorChange (e: string) {
       dataObj.value.formula = e

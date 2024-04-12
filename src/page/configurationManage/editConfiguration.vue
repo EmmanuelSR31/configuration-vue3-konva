@@ -16,6 +16,7 @@
           <li :class="{'active': curItemListType === 'device'}" @click="setCurItemListType('device')"><a href="javascript:void(0)">图库</a></li>
           <li :class="{'active': curItemListType === 'img'}" @click="setCurItemListType('img')"><a href="javascript:void(0)">图形</a></li>
           <li :class="{'active': curItemListType === 'canvas'}" @click="setCurItemListType('canvas')"><a href="javascript:void(0)">动画</a></li>
+          <!-- <li :class="{'active': curItemListType === 'uploadImg'}" @click="setCurItemListType('uploadImg')"><a href="javascript:void(0)">上传</a></li> -->
         </ul>
       </div>
       <div class="config-item-con" v-show="itemListShow">
@@ -134,7 +135,7 @@
                 </v-label>
               </template>
               <template v-else-if="item.category === 'echart-line'">
-                <v-image :config="configEcharts(item)" @dragstart="dragstart(item, $event)" @dragend="dragend" @transformend="transformend"></v-image>
+                <v-image :config="configEcharts(item, 'assets/img/device/echart-line.png')" @dragstart="dragstart(item, $event)" @dragend="dragend" @transformend="transformend"></v-image>
               </template>
               <template v-else-if="item.category === 'status'">
                 <v-circle :config="configStatus(item)" @dragstart="dragstart(item, $event)" @dragend="dragend" @transformend="transformend"></v-circle>
@@ -166,6 +167,9 @@
                 <v-circle :config="configLineAnchor(item1)" v-for="(item1, index1) in item.anchorPoints" @dragstart="dragstartLineAnchor(item1, index1, item)" @dragmove="dragmoveLineAnchor" @dragend="dragendLineAnchor" :key="index1"></v-circle>
                 <v-circle :config="configLineMiddle(item2)" v-for="(item2, index2) in item.middlePoints" @dragstart="dragstartLineMiddle(item2, index2, item)" @dragmove="dragmoveLineMiddle" @dragend="dragendLineMiddle" :key="index2"></v-circle>
               </v-group>
+            </template>
+            <template v-else-if="item.type === 'liquidfill'">
+              <v-image :config="configEcharts(item, 'assets/img/canvas/liquidfill.jpg')" @dragstart="dragstart(item, $event)" @dragend="dragend" @transformend="transformend"></v-image>
             </template>
           </template>
           <v-transformer ref="transformer" />
@@ -207,6 +211,10 @@
                     X&nbsp;&nbsp;<n-input-number :min="1" v-model:value="moveObj.x" @update:value="refreshDraw" style="width: 120px;" />&nbsp;
                     Y&nbsp;&nbsp;<n-input-number :min="1" v-model:value="moveObj.y" @update:value="refreshDraw" style="width: 120px;" />
                   </n-form-item>
+                  <n-form-item label="缩放">
+                    宽&nbsp;&nbsp;<n-input-number :min="0" v-model:value="moveObj.scaleX" @update:value="refreshDraw" style="width: 120px;" />&nbsp;
+                    高&nbsp;&nbsp;<n-input-number :min="0" v-model:value="moveObj.scaleY" @update:value="refreshDraw" style="width: 120px;" />
+                  </n-form-item>
                   <n-form-item label="旋转">
                     <n-input-number v-model:value="moveObj.rotation" />
                   </n-form-item>
@@ -214,7 +222,7 @@
                     <n-input-number :min="0" :max="1" :step="0.1" v-model:value="moveObj.opacity" />
                   </n-form-item>
                 </n-collapse-item>
-                <n-collapse-item title="外观" v-show="['text', 'datetime', 'pip-h'].includes(moveObj.type) || ['waterBox', 'value', 'echart-line', 'status', 'simpleButton', 'button', 'line'].includes(moveObj.category)" name="2">
+                <n-collapse-item title="外观" v-show="['text', 'datetime', 'pip-h', 'liquidfill'].includes(moveObj.type) || ['waterBox', 'value', 'echart-line', 'status', 'simpleButton', 'button', 'line'].includes(moveObj.category)" name="2">
                   <template v-if="['pip-h'].includes(moveObj.type)">
                     <n-form-item label="流动颜色">
                       <n-color-picker v-model:value="moveObj.pipelineColor" />
@@ -241,10 +249,10 @@
                     <n-form-item label="文本内容" v-show="['text'].includes(moveObj.type) || ['simpleButton', 'button'].includes(moveObj.category)">
                       <n-input v-model:value="moveObj.text" />
                     </n-form-item>
-                    <n-form-item label="单位" v-show="['value'].includes(moveObj.category)">
+                    <n-form-item label="单位" v-show="['liquidfill'].includes(moveObj.type) || ['value'].includes(moveObj.category)">
                       <n-input v-model:value="moveObj.unitText" />
                     </n-form-item>
-                    <template v-if="['text', 'datetime'].includes(moveObj.type) || ['value', 'echart-line', 'simpleButton', 'button'].includes(moveObj.category)">
+                    <template v-if="['text', 'datetime', 'liquidfill'].includes(moveObj.type) || ['value', 'echart-line', 'simpleButton', 'button'].includes(moveObj.category)">
                       <n-form-item label="字体大小">
                         <n-input-number :min="10" v-model:value="moveObj.fontSize" />
                       </n-form-item>
@@ -302,7 +310,7 @@
                         <n-color-picker v-model:value="moveObj.stroke" />
                       </n-form-item>
                     </template>
-                    <template v-if="['text', 'datetime'].includes(moveObj.type) || ['waterBox', 'value', 'simpleButton', 'button'].includes(moveObj.category)">
+                    <template v-if="['text', 'datetime', 'liquidfill'].includes(moveObj.type) || ['waterBox', 'value', 'simpleButton', 'button'].includes(moveObj.category)">
                       <template v-if="!['waterBox'].includes(moveObj.category)">
                         <n-form-item label="边框样式">
                           <n-radio-group v-model:value="moveObj.borderStyle">
@@ -311,7 +319,7 @@
                             <n-radio-button value="dotted" label="点状"></n-radio-button>
                           </n-radio-group>
                         </n-form-item>
-                        <n-form-item label="边框圆角">
+                        <n-form-item label="边框圆角" v-if="!['liquidfill'].includes(moveObj.type)">
                           <n-input-number :min="0" v-model:value="moveObj.cornerRadius" />
                         </n-form-item>
                       </template>
@@ -331,6 +339,20 @@
                       <n-color-picker v-model:value="moveObj.lineColor" />
                     </n-form-item>
                   </template>
+                  <template v-if="['liquidfill'].includes(moveObj.type)">
+                    <n-form-item label="形状">
+                      <n-select v-model:value="moveObj.shape" :options="liquidfillShapeList" value-field="id" label-field="text"></n-select>
+                    </n-form-item>
+                    <n-form-item label="水波颜色">
+                      <n-color-picker v-model:value="moveObj.liquidColor" />
+                    </n-form-item>
+                    <n-form-item label="水波透明度">
+                      <n-input-number :min="0" :max="1" v-model:value="moveObj.liquidOpacity" />
+                    </n-form-item>
+                    <n-form-item label="边框距离">
+                      <n-input-number :min="0" v-model:value="moveObj.borderDistance" />
+                    </n-form-item>
+                  </template>
                 </n-collapse-item>
               </n-collapse>
             </n-form>
@@ -345,7 +367,7 @@
               <n-form-item label="传感器">
                 <n-select v-model:value="moveObj.deviceDataId" :options="deviceDataList" value-field="deviceDataId" :render-label="renderDeviceDataLabel" @update:value="selectDeviceData" filterable></n-select>
               </n-form-item>
-              <n-form-item label="高度(峰值)" v-show="['waterBox'].includes(moveObj.category)">
+              <n-form-item label="高度(峰值)" v-show="['waterBox'].includes(moveObj.category) || ['liquidfill'].includes(moveObj.type)">
                 <n-input-number :min="0" v-model:value="moveObj.maxHeight" />
               </n-form-item>
               <n-form-item label="状态条件" v-show="['status'].includes(moveObj.category)">
@@ -524,12 +546,23 @@ export default {
     /**
     * @desc Echarts配置
     */
-    function configEcharts (item: any) {
+    function configEcharts (item: any, src: string) {
+      let obj = util.value.deepClone(item)
       var imageObj = new Image()
-      imageObj.src = '/assets/img/device/' + item.category + '.png'
-      item.image = imageObj
-      return item
+      imageObj.src = src
+      obj.image = imageObj
+      obj.strokeWidth = 0
+      return obj
     }
+    // 水波形状数据
+    const liquidfillShapeList = [
+      { id: 'circle', text: '圆形' },
+      { id: 'rect', text: '方形' },
+      { id: 'roundRect', text: '圆角方形' },
+      { id: 'triangle', text: '三角形' },
+      { id: 'diamond', text: '菱形' },
+      { id: 'pin', text: '别针' }
+    ]
     /**
     * @desc 线条端点配置
     */
@@ -1085,7 +1118,7 @@ export default {
       init, setCurItemListType, toggleDeviceItemType, setSvgItems, dragstartLeft, drop, items,
       configImg, configLabel, configTag, configText, configDatetime, configWeather, configDeviceImg, configWaterBoxGroup,
       configWaterBoxBack, configWaterBoxWater, configWaterBoxLine,
-      configValue, configEcharts, configStatus, configSimpleButtonText, configButtunTag,
+      configValue, configEcharts, liquidfillShapeList, configStatus, configSimpleButtonText, configButtunTag,
       configLineGroup, configLine, configLinePipe, configLineAnchor, configLineMiddle,
       dragstartLineAnchor, dragmoveLineAnchor, dragendLineAnchor, dragstartLineMiddle, dragmoveLineMiddle, dragendLineMiddle,
       moveObj, dragstart, dragmove, dragend, transform, transformend, stageClick,

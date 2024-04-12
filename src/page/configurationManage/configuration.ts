@@ -1,5 +1,5 @@
 import common from '@/page/mixins/common' // 基本混入
-import { getCurrentInstance, reactive, ref, computed } from 'vue'
+import { getCurrentInstance, ref, computed } from 'vue'
 
 export default function () {
   const proxy: any = getCurrentInstance()!.proxy
@@ -85,7 +85,16 @@ export default function () {
   function configDeviceImg (item: any) {
     var imageObj = new Image()
     if (method.value === 'view') {
-
+      imageObj.src = item.offImg
+      if (item.deviceState === 'OffLine') {
+        imageObj.src = item.offImg
+      } else if (item.deviceState === 'Startup') {
+        imageObj.src = item.offImg
+      } else if (item.deviceState === 'Work') {
+        imageObj.src = item.onImg
+      } else if (item.deviceState === 'Alarm') {
+        imageObj.src = item.errorImg
+      }
     } else {
       imageObj.src = item.onImg
     }
@@ -106,6 +115,9 @@ export default function () {
     obj.fill = item.backColor
     obj.x = 0
     obj.y = 0
+    obj.scaleX = 1
+    obj.scaleY = 1
+    obj.rotation = 0
     obj.strokeWidth = 0
     obj.draggable = false
     return obj
@@ -116,12 +128,15 @@ export default function () {
   function configWaterBoxWater (item: any) {
     let obj = util.value.deepClone(item)
     obj.fill = item.color
+    obj.scaleX = 1
+    obj.scaleY = 1
+    obj.rotation = 0
     // 实际只减边框宽度的一半
     obj.x = item.strokeWidth / 2
     obj.width = item.width - (item.strokeWidth * 1)
     let h = 0
     if (method.value === 'view') {
-
+      h = item.val / item.maxHeight * item.height
     } else {
       h = item.height / 2
     }
@@ -136,6 +151,9 @@ export default function () {
     obj.points = [0, 0, 0, item.height, item.width, item.height, item.width, 0]
     obj.x = 0
     obj.y = 0
+    obj.scaleX = 1
+    obj.scaleY = 1
+    obj.rotation = 0
     obj.lineJoin = 'round'
     obj.lineCap = 'round'
     obj.draggable = false
@@ -147,7 +165,7 @@ export default function () {
   function configValue (item: any) {
     let obj = configText(item)
     if (method.value === 'view') {
-
+      obj.text = obj.val
     } else {
       obj.text = '12.34'
     }
@@ -160,7 +178,15 @@ export default function () {
   * @desc 状态配置
   */
   function configStatus (item: any) {
-    item.fill = item.color
+    if (method.value === 'view') {
+      for (const iterator of item.statusData) {
+        if (item.val >= iterator.less && item.val <= iterator.greater) {
+          item.fill = iterator.color
+        }
+      }
+    } else {
+      item.fill = item.color
+    }
     item.radius = item.width
     return item
   }

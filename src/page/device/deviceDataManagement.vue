@@ -77,6 +77,7 @@ import deviceDataCom from './deviceDataCom.vue' // 弹窗组件
 import deviceDataFrom from './deviceDataFrom.vue'
 import alarmSettingList from './alarmSettingList.vue'
 import deviceDataHistory from './deviceDataHistory.vue'
+import transmiterManagement from './transmiterManagement.vue'
 import tablePage from '@/page/components/tablePage.vue' // 表格分页组件
 import { IInterfaceData } from '@/page/interface/interface'
 import { getCurrentInstance, ref, h, provide } from 'vue'
@@ -179,10 +180,18 @@ export default {
       {
         title: '操作',
         key: 'action',
-        width: 120,
+        width: 180,
         align: 'center',
         render: (row: RowData): any => {
           return h('div', [
+            h('a', {
+              href: 'javascript:void(0)',
+              style: {
+                marginRight: '20px'
+              },
+              class: 'edit',
+              onClick: () => openTransmiter(row)
+            }, '数据转发'),
             h('a', {
               href: 'javascript:void(0)',
               style: {
@@ -269,6 +278,13 @@ export default {
           })
         }
       })
+    }
+    /**
+    * @desc 数据转发
+    */
+    const transmiterDialog = useCommandComponent(transmiterManagement)
+    function openTransmiter (row: any) {
+      transmiterDialog({ title: row.dataName + '数据转发管理', visible: true, obj: row })
     }
     let storageModal = ref(false)
     let storageObj = ref({ deviceDataStorageType: '', saveCycleSecond: null, deviceDataId: '' })

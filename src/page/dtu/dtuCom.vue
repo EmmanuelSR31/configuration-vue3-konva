@@ -50,7 +50,7 @@
           <n-input-number v-model:value="dataObj.dtuChildPort" placeholder="请输入端口" style="width: 100px;"></n-input-number>&nbsp;&nbsp;&nbsp;
           <n-button type="primary" v-show="method === 'edit'" @click="connectTest">连接测试</n-button>
         </div>
-        <template v-if="typeIncludes('PLC_DELTA')">
+        <template v-if="typeIncludes('PLC_DELTA') || typeIncludes('PLC_FATEK')">
           &nbsp;&nbsp;&nbsp;站号&nbsp;<n-input v-model:value="dataObj.stationId" style="width: 100px;"></n-input>&nbsp;&nbsp;&nbsp;
         </template>
         <div style="display: flex;font-size: 14px;align-items: center;margin-left: 20px;color: #999;"><n-icon size="22"><info-circle-outlined /></n-icon>示例：192.168.1.1&nbsp;&nbsp;101</div>

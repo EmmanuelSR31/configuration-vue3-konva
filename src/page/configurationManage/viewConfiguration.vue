@@ -36,7 +36,7 @@
               </v-group>
             </template>
             <template v-else-if="item.category === 'value'">
-              <v-label :config="configLabel(item)">
+              <v-label :config="configLabel(item)" @click="showEdit(item)">
                 <v-tag :config="configTag(item)"></v-tag>
                 <v-text :config="configValue(item)"></v-text>
               </v-label>
@@ -45,7 +45,7 @@
               <v-circle :config="configStatus(item)"></v-circle>
             </template>
             <template v-else-if="item.category === 'simpleButton'">
-              <v-label :config="configLabel(item)" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+              <v-label :config="configLabel(item)" @click="clickBut(item)" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
                 <v-tag :config="configTag(item)"></v-tag>
                 <v-text :config="configSimpleButtonText(item)"></v-text>
               </v-label>
@@ -91,18 +91,52 @@
       <template v-else-if="item.category === 'echart-line'">
         <echart-line :obj="item" :index="index"></echart-line>
       </template>
+      <template v-else-if="item.type === 'liquidfill'">
+        <echart-liquidfill :obj="item" :index="index"></echart-liquidfill>
+      </template>
     </template>
+    <n-modal title="修改数值" v-model:show="modalEdit" preset="card" style="width: 400px;" @update:show="modalEditShow" :mask-closable="false" :close-on-esc="false">
+      <div class="modal-form-1">
+        <n-form label-placement="left" label-width="80px" require-mark-placement="left">
+          <n-form-item label="参数名称">
+            <n-input v-model:value="editVal" placeholder="请输入数值"></n-input>
+          </n-form-item>
+        </n-form>
+        <div class="modal-btn">
+          <n-button type="primary" @click="editSave()">确定</n-button>
+        </div>
+      </div>
+    </n-modal>
+    <n-modal title="二次授权" v-model:show="loginModal" preset="card" style="width: 600px;" :mask-closable="false" :close-on-esc="false">
+      <div class="modal-form-1">
+        <n-form ref="formValidate" :model="loginObj" :rules="ruleValidate"  label-placement="left" label-width="80px" require-mark-placement="left">
+          <n-form-item label="用户名" path="userName">
+            <n-input type="text" v-model:value="loginObj.userName" placeholder="请输入用户名"></n-input>
+          </n-form-item>
+          <n-form-item label="密码" path="userPassword">
+            <n-input type="text" v-model:value="loginObj.userPassword" placeholder="请输入密码"></n-input>
+          </n-form-item>
+        </n-form>
+        <div class="modal-btn">
+          <n-button type="primary" @click="login()">确定</n-button>
+        </div>
+      </div>
+    </n-modal>
+    <number-keyboard v-if="showKeyboard" v-model:fatherNum="editVal" :clickTime="0" @confirmEvent="editSave"
+    @numberEvent="numberEvent" @deleteEvent="deleteEvent"></number-keyboard>
   </div>
 </template>
 <script lang="ts">
 import common from '@/page/mixins/common' // 基本混入
 import configuration from './configuration'
 import echartLine from './echart-line.vue'
-import { getCurrentInstance, ref, nextTick, h } from 'vue'
+import echartLiquidfill from './echart-liquidfill.vue'
+import numberKeyboard from '@/page/components/number-keyboard.vue'
+import { getCurrentInstance, ref, reactive } from 'vue'
 import { IInterfaceData } from '@/page/interface/interface'
 import Konva from 'konva'
 export default {
-  components: { echartLine },
+  components: { echartLine, echartLiquidfill, numberKeyboard },
   setup () {
     const proxy: any = getCurrentInstance()!.proxy
     let { util, uploadRoot } = common()
@@ -139,6 +173,7 @@ export default {
         }
       }
       initSocket()
+      initSocketState()
     }
     let sensorItems = ref<Array<any>>([]) // 绑定设备的组件数组
     let websocket = ref<any>(null)
@@ -183,6 +218,118 @@ export default {
         }
       }
     }
+    let websocketState = ref<any>(null)
+    function initSocketState () {
+      let url = uploadRoot.value.replace('http://', 'ws://') + '/dsa/api/deviceState/websocket/' + sessionStorage.token
+      websocketState.value = new WebSocket(url)
+      websocketState.value.onopen = (e: any) => {
+        console.log('onopen')
+      }
+      websocketState.value.onerror = (e: any) => {
+        console.log('onerror')
+        console.log(e)
+      }
+      websocketState.value.onmessage = (e: any) => {
+        // console.log(e.data)
+        if (!util.value.isEmpty(e.data)) {
+          let temp = JSON.parse(e.data)
+          for (const iterator of sensorItems.value) {
+            if (iterator.deviceId === temp.deviceId) {
+              iterator.deviceState = temp.deviceState
+              break
+            }
+          }
+        }
+      }
+      websocketState.value.onclose = (e: any) => {
+        console.log('onclose')
+        if (!exitFlag.value) {
+          setTimeout(() => {
+            initSocketState()
+          }, 5000)
+        }
+      }
+    }
+    /**
+    * @desc 普通按钮点击
+    */
+    function clickBut (item: any) {
+      proxy.$myMessage({
+        type: 'info',
+        MessageTitle: '确定执行此操作？',
+        submit: () => {
+          editObj.value.deviceDataId = item.deviceDataId
+          editVal.value = '1'
+          editSave()
+        }
+      })
+    }
+    let editObj = ref({ deviceDataId: '' }) // 编辑数值对象
+    let editVal = ref('') // 编辑数值
+    let modalEdit = ref(false)
+    let showKeyboard = ref(false)
+    /**
+    * @desc 打开数值弹窗
+    */
+    function showEdit (item: any) {
+      editObj.value.deviceDataId = item.deviceDataId
+      editVal.value = ''
+      modalEdit.value = true
+      showKeyboard.value = true
+    }
+    /**
+    * @desc 数值弹窗展示状态
+    */
+    function modalEditShow (val: boolean) {
+      if (!val) {
+        showKeyboard.value = false
+      }
+    }
+    /**
+    * @desc 保存数值
+    */
+    function editSave () {
+      if (util.value.isEmpty(editVal.value)) {
+        proxy.$myMessage.error1('请填写数值')
+        return false
+      }
+      if (!util.value.isEmpty(editObj.value.deviceDataId)) {
+        proxy.$api.post('commonRoot', '/mes/device/data/web/setData', { deviceDataId: editObj.value.deviceDataId, value: editVal.value, twiceAuthToken: sessionStorage.token }, (r: IInterfaceData) => {
+          if (r.data.code === 0) {
+            modalEdit.value = false
+            showKeyboard.value = false
+          } else {
+            proxy.$myMessage.error1(r.data.msg)
+            if (r.data.msg.includes('二次授权')) {
+              loginObj.value = { userName: '', userPassword: '' }
+              loginModal.value = true
+            }
+          }
+        })
+      }
+    }
+    function numberEvent (res: string) {
+      editVal.value = res
+    }
+    function deleteEvent (res: string) {
+      editVal.value = res
+    }
+    let loginObj = ref({ userName: '', userPassword: '' }) // 二次授权对象
+    let loginModal = ref(false)
+    const ruleValidate = reactive({ // 二次授权表单验证
+      userName: [
+        { required: true, message: '用户名不能为空', trigger: 'blur' }
+      ],
+      password: [
+        { required: true, message: '密码不能为空', trigger: 'blur' }
+      ]
+    })
+    /**
+    * @desc 二次授权
+    */
+    function login () {
+
+    }
     /**
     * @desc 鼠标移入
     */
@@ -199,7 +346,9 @@ export default {
       configImg, configLabel, configTag, configText, configDatetime, configDeviceImg, configWaterBoxGroup,
       configWaterBoxBack, configWaterBoxWater, configWaterBoxLine,
       configValue, configStatus, configSimpleButtonText, configButtunTag,
-      configLineGroup, configLine, configLinePipe, handleMouseEnter, handleMouseLeave,
+      configLineGroup, configLine, configLinePipe, clickBut, editVal, modalEdit, showKeyboard, showEdit, modalEditShow, editSave, numberEvent, deleteEvent,
+      loginObj, loginModal, ruleValidate, login,
+      handleMouseEnter, handleMouseLeave,
       basicSettings, getBasicStyle, itemStyle }
   }
 }

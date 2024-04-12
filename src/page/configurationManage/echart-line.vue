@@ -89,9 +89,9 @@ export default {
           bottom: 80
         },
         tooltip: {
-          trigger: 'axis',
-          position: ['40%', '90%'],
-          appendToBody: true
+          trigger: 'axis'
+          /* position: ['40%', '90%'],
+          appendToBody: true */
         },
         toolbox: {
           show: true,

@@ -18,13 +18,13 @@
         {{dataObj.intoFactoryDate}}
       </n-form-item>
       <n-form-item label="设备总时间：">
-        {{getTimeText(dataObj.totalSecond)}}
+        {{getTimeText(dataObj.totalSecond)}}/{{getDayTimeText(dataObj.totalSecond)}}
       </n-form-item>
       <n-form-item label="工作时间：">
-        {{getTimeText(dataObj.workSecond)}}
+        {{getTimeText(dataObj.workSecond)}}/{{getDayTimeText(dataObj.workSecond)}}
       </n-form-item>
       <n-form-item label="停机时间：">
-        {{getTimeText(dataObj.startupSecond)}}
+        {{getTimeText(dataObj.startupSecond)}}/{{getDayTimeText(dataObj.startupSecond)}}
       </n-form-item>
     </n-form>
   </div>
@@ -266,6 +266,13 @@ export default {
       }
       return temp + '小时'
     }
+    function getDayTimeText (num: string | number) {
+      let temp = 0
+      if (!util.value.isEmpty(num)) {
+        temp = Math.ceil(util.value.FloatDiv(num, 3600 * 24))
+      }
+      return temp + '天'
+    }
     function convertSecondsToTime (seconds: number, type = 0) {
       let days = Math.floor(seconds / (3600 * 24)); // 计算天数
       seconds -= days * 3600 * 24; // 从总秒数中去除已经计算过的天数部分
@@ -296,7 +303,7 @@ export default {
         return `${hours}小时${minutes}分钟${seconds}秒`
       }
     }
-    return { showModel, dataObj, searchObj, init, dataObj1, dataObj2, getData1, getData2, getTimeText, convertSecondsToTime, convertSecondsToTime1 }
+    return { showModel, dataObj, searchObj, init, dataObj1, dataObj2, getData1, getData2, getDayTimeText, getTimeText, convertSecondsToTime, convertSecondsToTime1 }
   }
 }
 </script>
