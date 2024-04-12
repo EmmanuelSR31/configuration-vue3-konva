@@ -91,6 +91,11 @@
       <template v-else-if="item.category === 'echart-line'">
         <echart-line :obj="item" :index="index"></echart-line>
       </template>
+      <template v-else-if="item.type === 'progress'">
+        <div :style="itemStyle(item)">
+          <n-progress :color="item.color" :rail-color="item.backColor" :height="item.height" :percentage="item.val !== null && item.val !== undefined ? item.val/item.maxHeight*100 : 0" indicator-placement="inside"></n-progress>
+        </div>
+      </template>
       <template v-else-if="item.type === 'liquidfill'">
         <echart-liquidfill :obj="item" :index="index"></echart-liquidfill>
       </template>

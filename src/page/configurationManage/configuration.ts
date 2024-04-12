@@ -14,13 +14,16 @@ export default function () {
     var imageObj = new Image()
     imageObj.src = item.img
     item.image = imageObj
+    item.name = 'item'
     return item
   }
   /**
   * @desc 文本块配置
   */
   function configLabel (item: any) {
-    return item
+    let obj = util.value.deepClone(item)
+    obj.name = 'item'
+    return obj
   }
   /**
   * @desc 背景配置
@@ -99,13 +102,16 @@ export default function () {
       imageObj.src = item.onImg
     }
     item.image = imageObj
+    item.name = 'item'
     return item
   }
   /**
   * @desc 水箱组配置
   */
   function configWaterBoxGroup (item: any) {
-    return item
+    let obj = util.value.deepClone(item)
+    obj.name = 'item'
+    return obj
   }
   /**
   * @desc 水箱背景配置
@@ -208,6 +214,7 @@ export default function () {
   * @desc 线条组配置
   */
   function configLineGroup (item: any) {
+    item.group.name = 'item'
     return item.group
   }
   /**

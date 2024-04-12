@@ -8091,10 +8091,10 @@ export default createStore({
         img: 'assets/img/canvas/progress.jpg',
         fontColor: 'rgba(255,255,255,1)',
         color: 'rgba(45, 140, 240, 1)',
-        backColor: 'rgba(243, 243, 243, 1)',
-        fontSize: '12',
-        max: 100,
-        width: 300,
+        backColor: 'rgba(235, 235, 235, 1)',
+        fontSize: '14',
+        maxHeight: 100,
+        width: 360,
         height: 30
       },
       {
