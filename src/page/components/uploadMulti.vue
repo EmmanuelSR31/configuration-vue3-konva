@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import common from '@/page/mixins/common' // 基本混入
-import { ref, getCurrentInstance, reactive, watch, onMounted } from 'vue'
+import { ref, getCurrentInstance, watch, onMounted } from 'vue'
 import { IInterfaceData, IUploadResData } from '@/page/interface/interface'
 import { UploadCustomRequestOptions } from 'naive-ui'
 import axios from 'axios'

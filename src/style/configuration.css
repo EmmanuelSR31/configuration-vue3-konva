@@ -113,6 +113,11 @@
   z-index: 10;
 }
 
+.config-item-con .n-collapse-item__header-extra i {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
 .config-center {
   height: calc(100% - 50px);
   overflow: auto;
@@ -209,6 +214,10 @@
   display: none;
 }
 
+.config-right-from-con .n-button, .config-right-from-con .n-button:not(.n-button--disabled):hover {
+  background-color: #fff;
+}
+
 .config-item-top {
   text-align: center;
   font-size: .15rem;
@@ -280,20 +289,44 @@
   overflow: auto;
 }
 
+.upload-img-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .upload-img-list li {
+  width: 85px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
+  border: 1px solid #fff;
+  cursor: move;
+}
+
+.upload-img-list li:hover {
+  border: 1px solid #efefef;
 }
 
 .upload-img-list li:hover .upload-img-del {
   opacity: 1;
 }
 
+.upload-img-list li img {
+  max-width: 100%;
+  min-width: 50px;
+  max-height: 80px;
+}
+
 .upload-img-del {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
   color: #333;
-  font-size: .2rem;
+  cursor: pointer;
   opacity: 0;
 }
 

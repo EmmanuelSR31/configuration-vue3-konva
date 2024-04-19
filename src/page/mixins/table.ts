@@ -1,5 +1,5 @@
 import Util from '@/utils/index'
-import { getCurrentInstance, reactive, ref, computed } from 'vue'
+import { getCurrentInstance, ref, computed } from 'vue'
 import { ITableSearch } from '@/page/interface/interface'
 
 export default function () {
@@ -11,7 +11,7 @@ export default function () {
   const data = ref<Array<any>>([]) // 数据
   const leftData = ref<Array<any>>([]) // 数据
   const selectObj: any = ref({}) // 选中数据
-  const selectRowObj = reactive({}) // 选中行数据
+  const selectRowObj = ref({}) // 选中行数据
   const searchArr = ref<ITableSearch[]>([]) // 搜索项
   let showCom = ref(false) // 显示弹窗组件
   let method = ref('') // 弹窗组件方法

@@ -27,7 +27,7 @@
 <script lang="ts">
 import common from '@/page/mixins/common' // 基本混入
 import { IUploadResData, IInterfaceData } from '@/page/interface/interface'
-import { getCurrentInstance, ref, reactive } from 'vue'
+import { getCurrentInstance, ref } from 'vue'
 import { FormInst } from 'naive-ui'
 import uploadSingle from '@/page/components/uploadSingle.vue'
 export default {
@@ -37,7 +37,7 @@ export default {
     let { util, uploadRoot } = common()
     const formValidate = ref<FormInst | null>(null)
     let dataObj = ref({ loginSystemName: '', loginBackgroundOssId: '', loginBackgroundFileName: '', loginBackgroundRelativePath: '', headerSystemName: '', headerIconOssId: '', headerIconFileName: '', headerIconRelativePath: '' }) // 数据对象
-    const ruleValidate = reactive({ // 表单验证
+    const ruleValidate = ref({ // 表单验证
     })
     /**
     * @desc 初始化

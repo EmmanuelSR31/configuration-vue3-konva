@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import Util from '@/utils/index' // 工具类
-import { ref, onMounted, PropType, reactive } from 'vue'
+import { ref, onMounted, PropType } from 'vue'
 import common from '@/page/mixins/common' // 基本混入
 import { ITableParams } from '@/page/interface/interface'
 export default {

@@ -78,7 +78,7 @@ import deviceDataFrom from './deviceDataFrom.vue'
 import alarmSettingList from './alarmSettingList.vue'
 import deviceDataHistory from './deviceDataHistory.vue'
 import transmiterManagement from './transmiterManagement.vue'
-import tablePage from '@/page/components/tablePage.vue' // 表格分页组件
+import { tablePage } from '@/page/components/index'
 import { IInterfaceData } from '@/page/interface/interface'
 import { getCurrentInstance, ref, h, provide } from 'vue'
 import { Add } from '@vicons/ionicons5'

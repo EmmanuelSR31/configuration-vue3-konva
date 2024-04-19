@@ -1,9 +1,9 @@
 import Util from '@/utils/index'
-import { getCurrentInstance, reactive, ref, computed } from 'vue'
+import { getCurrentInstance, ref, computed } from 'vue'
 
 export default function () {
   const proxy: any = getCurrentInstance()!.proxy
-  let user = reactive({ userName: '', userActualname: '', userPassword: '' }) // 登录用户
+  let user = ref({ userName: '', userActualname: '', userPassword: '' }) // 登录用户
   const uploadRoot = ref(window.webConfig.uploadRoot)
   let showModel = ref(false)
   let token = sessionStorage.token
@@ -36,7 +36,7 @@ export default function () {
     return JSON.parse(temp)
   }
   if (!Util.isEmpty(sessionStorage.user)) {
-    user = JSON.parse(sessionStorage.user)
+    user.value = JSON.parse(sessionStorage.user)
   }
   return {
     user, uploadRoot, showModel, token, util, upfileError, closeDialog, checkEmpty, arrRemoveEmptyChildren

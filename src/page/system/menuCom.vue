@@ -30,7 +30,7 @@
 <script lang="ts">
 import common from '@/page/mixins/common' // 基本混入
 import { IInterfaceData } from '@/page/interface/interface'
-import { getCurrentInstance, ref, reactive, inject } from 'vue'
+import { getCurrentInstance, ref, inject } from 'vue'
 import { FormInst } from 'naive-ui'
 export default {
   props: {
@@ -45,7 +45,7 @@ export default {
     const parentChangePage:any = inject('parentChangePage')
     const formValidate = ref<FormInst | null>(null)
     let dataObj = ref({ menuStructName: '', menuStructPid: '', menuStructUrl: '', menuStructIcon: '', sort: null }) // 数据对象
-    const ruleValidate = reactive({ // 表单验证
+    const ruleValidate = ref({ // 表单验证
       menuStructName: [
         { required: true, message: '请填写菜单名称', trigger: 'blur' }
       ],

@@ -239,6 +239,15 @@ export default function () {
     obj.draggable = false
     return obj
   }
+  /**
+  * @desc 上传图片配置
+  */
+  function configUploadImg (item: any) {
+    var imageObj = new Image()
+    imageObj.src = uploadRoot.value + '/oss/' + item.relativePath
+    item.image = imageObj
+    return item
+  }
   let basicSettings = ref({ // 基本设置
     name: '',
     cover: '',
@@ -281,7 +290,7 @@ export default function () {
   }
   return {
     method, id, items, configImg, configLabel, configTag, configText, configDatetime, configDeviceImg, configWaterBoxGroup, configWaterBoxBack, configWaterBoxWater,
-    configWaterBoxLine, configValue, configStatus, configSimpleButtonText, configButtunTag, configLineGroup, configLine, configLinePipe, basicSettings, getBasicStyle,
-    itemStyle
+    configWaterBoxLine, configValue, configStatus, configSimpleButtonText, configButtunTag, configLineGroup, configLine, configLinePipe, configUploadImg,
+    basicSettings, getBasicStyle, itemStyle
   }
 }

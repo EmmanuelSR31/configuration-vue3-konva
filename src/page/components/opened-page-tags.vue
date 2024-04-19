@@ -19,7 +19,7 @@
   </div>
 </template>
 <script lang="ts">
-import { getCurrentInstance, ref, reactive, computed, watch, onMounted, PropType } from 'vue'
+import { getCurrentInstance, ref, computed, watch, onMounted, PropType } from 'vue'
 export default {
   name: 'openedPageTags',
   props: {
@@ -32,7 +32,7 @@ export default {
     let tabVal = ref('')
     tabVal.value = proxy.$store.state.currentPageName
     let tagContextmenuShow = ref(false) // 是否显示右键菜单
-    let axios = reactive({ x: 0, y: 0 }) // 右键菜单位置
+    let axios = ref({ x: 0, y: 0 }) // 右键菜单位置
     let tagConLeft = ref(0) // 滚动区域左侧距离
     let refsTag = ref([]) // 标签DOM
     const currentPageName = computed(() => { // 当前页面名
@@ -87,8 +87,8 @@ export default {
       let y: number = event.clientY - 2
       proxy.$store.commit('setContextMenuOpenedTag', item.url)
       tagContextmenuShow.value = true
-      axios.x = x
-      axios.y = y
+      axios.value.x = x
+      axios.value.y = y
     }
     /**
     * @desc 点击右键菜单

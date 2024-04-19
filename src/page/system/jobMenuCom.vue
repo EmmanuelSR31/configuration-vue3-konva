@@ -27,7 +27,7 @@
 <script lang="ts">
 import common from '@/page/mixins/common' // 基本混入
 import { IInterfaceData, IMenu, IPosition } from '@/page/interface/interface'
-import { getCurrentInstance, ref, reactive, inject } from 'vue'
+import { getCurrentInstance, ref, inject } from 'vue'
 import { FormInst } from 'naive-ui'
 export default {
   props: {
@@ -43,7 +43,7 @@ export default {
     const parentChangePage:any = inject('parentChangePage')
     const formValidate = ref<FormInst | null>(null)
     let dataObj = ref({ positionId: '', positionName: '', menuStructId: '', menuStructPid: '', menuStructName: '', menuStructUrl: '', menuStructIcon: '', sort: null, isAuthorize: false, authorize: false }) // 数据对象
-    const ruleValidate = reactive({ // 表单验证
+    const ruleValidate = ref({ // 表单验证
       positionId: [
         { required: true, message: '请选择职位', trigger: 'change' }
       ],
@@ -56,7 +56,7 @@ export default {
     })
     const jobList = ref<IPosition[]>([])
     const menuList = ref([])
-    let menuListAll: IMenu[] = reactive([])
+    let menuListAll = ref<Array<IMenu>>([])
     /**
     * @desc 初始化
     */
@@ -70,7 +70,7 @@ export default {
       proxy.$api.get('commonRoot', '/module/framework/menu/struct/tree', {}, (r: IInterfaceData) => {
         if (r.data.code === 0) {
           menuList.value = arrRemoveEmptyChildren(r.data.data)
-          menuListAll = util.value.arrayFlatten(menuList.value)
+          menuListAll.value = util.value.arrayFlatten(menuList.value)
         }
       })
       dataObj.value = util.value.deepClone(props.obj)
@@ -88,7 +88,7 @@ export default {
     }
     function selectMenu (val: string) {
       dataObj.value.menuStructId = val
-      let obj = menuListAll.find((ele: any) => ele.menuStructId === val)
+      let obj = menuListAll.value.find((ele: any) => ele.menuStructId === val)
       dataObj.value.menuStructPid = obj!.menuStructPid
       dataObj.value.menuStructName = obj!.menuStructName
       dataObj.value.menuStructUrl = obj!.menuStructUrl

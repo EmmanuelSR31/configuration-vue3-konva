@@ -16,7 +16,7 @@
           <li :class="{'active': curItemListType === 'device'}" @click="setCurItemListType('device')"><a href="javascript:void(0)">图库</a></li>
           <li :class="{'active': curItemListType === 'img'}" @click="setCurItemListType('img')"><a href="javascript:void(0)">图形</a></li>
           <li :class="{'active': curItemListType === 'canvas'}" @click="setCurItemListType('canvas')"><a href="javascript:void(0)">动画</a></li>
-          <!-- <li :class="{'active': curItemListType === 'uploadImg'}" @click="setCurItemListType('uploadImg')"><a href="javascript:void(0)">上传</a></li> -->
+          <li :class="{'active': curItemListType === 'uploadImg'}" @click="setCurItemListType('uploadImg')"><a href="javascript:void(0)">上传</a></li>
         </ul>
       </div>
       <div class="config-item-con" v-show="itemListShow">
@@ -84,6 +84,34 @@
               <div class="drag" draggable="true" @dragstart="dragstartLeft(item)"><img :alt="item.name" :title="item.name" :src="item.img"></div>
             </li>
           </ul>
+          <div v-show="curItemListType === 'uploadImg'">
+            <div style="display: flex;justify-content: center;">
+              <n-button type="info" size="small" @click="addPicType">新增分组</n-button>
+            </div>
+            <n-collapse accordion :trigger-areas="['main', 'arrow']" @update:expanded-names="picTypeCollapseExpand">
+              <n-collapse-item v-for="(item, index) in picTypeList" :title="item.pictypeName" :name="item.picTypeId" :key="index">
+                <template #header-extra>
+                  <n-icon size="20" @click="editPicType(item)" title="修改">
+                    <edit-outlined />
+                  </n-icon>
+                  <n-icon size="20" @click="delPicType(item)" title="删除">
+                    <delete-outlined />
+                  </n-icon>
+                </template>
+                <ul class="upload-img-list">
+                  <li v-for="(itm, index1) in picData[item.picTypeId]" class="drag" draggable="true" @dragstart="dragstartLeft({ ...itm, ...{ type: 'uploadImg' }})" :key="index1">
+                    <img :src="uploadRoot + '/oss/' + itm.relativePath">
+                    <n-icon size="20" class="upload-img-del" @click="delPic(itm)" title="删除">
+                      <delete-outlined />
+                    </n-icon>
+                  </li>
+                  <li class="upload-img-li-add">
+                    <upload-single :action="uploadRoot + '/module/oss/upload'" @upload-success="uploadImgSuccess" :fileObj="{ossId: '', fileName: '', relativePath: ''}" isImg accept="image/*" :isPreview="true"></upload-single>
+                  </li>
+                </ul>
+              </n-collapse-item>
+            </n-collapse>
+          </div>
         </div>
       </div>
     </div>
@@ -173,6 +201,9 @@
             </template>
             <template v-else-if="item.type === 'liquidfill'">
               <v-image :config="configEcharts(item, 'assets/img/canvas/liquidfill.jpg')" @dragstart="dragstart(item, $event)" @dragend="dragend" @transformend="transformend"></v-image>
+            </template>
+            <template v-else-if="item.type === 'uploadImg'">
+              <v-image :config="configUploadImg(item)" @dragstart="dragstart(item, $event)" @dragend="dragend" @transformend="transformend"></v-image>
             </template>
           </template>
           <v-transformer ref="transformer" />
@@ -409,13 +440,30 @@
                 <n-color-picker v-model:value="basicSettings.backColor" />
               </n-form-item>
               <n-form-item label="背景图片">
-                <upload-single :action="uploadRoot + '/module/oss/upload'" :fileObj="{ossId: basicSettings.ossId, fileName: basicSettings.fileName, relativePath:  basicSettings.relativePath}" @upload-success="upBackSuccess" isImg accept="image/*" :isPreview="true"></upload-single>
+                <upload-single :action="uploadRoot + '/module/oss/upload'" :fileObj="{ossId: basicSettings.ossId, fileName: basicSettings.fileName, relativePath: basicSettings.relativePath}" @upload-success="upBackSuccess" isImg accept="image/*" :isPreview="true"></upload-single>
               </n-form-item>
             </n-form>
           </div>
         </n-tab-pane>
       </n-tabs>
     </div>
+    <n-modal v-model:show="modalPicType" title="图片分组" preset="card" style="width: 450px;" :mask-closable="false" :close-on-esc="false">
+      <div class="modal-field-con">
+        <div class="modal_form1">
+          <n-form ref="picTypeFrom" :model="picTypeObj" :rules="picTypeValidate" label-width="110px">
+            <n-form-item label="分组名称" path="pictypeName">
+              <n-input v-model:value="picTypeObj.pictypeName"></n-input>
+            </n-form-item>
+            <n-form-item label="排序" path="sort">
+              <n-input-number v-model:value="picTypeObj.sort"></n-input-number>
+            </n-form-item>
+          </n-form>
+          <div class="modal-btn">
+            <n-button type="primary" @click="savePicType()">保存</n-button>
+          </div>
+        </div>
+      </div>
+    </n-modal>
   </div>
 </template>
 <script lang="ts">
@@ -423,17 +471,19 @@ import common from '@/page/mixins/common' // 基本混入
 import configuration from './configuration'
 import { getCurrentInstance, ref, nextTick, h } from 'vue'
 import { IInterfaceData, IUploadResData } from '@/page/interface/interface'
-import { NInput, NColorPicker, SelectOption } from 'naive-ui'
+import { NInput, NColorPicker, SelectOption, FormInst } from 'naive-ui'
 import type { DataTableColumns } from 'naive-ui'
 import Konva from 'konva'
-import uploadSingle from '@/page/components/uploadSingle.vue'
+import { uploadSingle } from '@/page/components/index'
+import { EditOutlined, DeleteOutlined } from '@vicons/antd'
 export default {
-  components: { uploadSingle },
+  components: { uploadSingle, EditOutlined, DeleteOutlined },
   setup () {
     const proxy: any = getCurrentInstance()!.proxy
     let { util, uploadRoot } = common()
     let { method, id, items, configImg, configLabel, configTag, configText, configDatetime, configDeviceImg, configWaterBoxGroup, configWaterBoxBack, configWaterBoxWater,
-      configWaterBoxLine, configValue, configStatus, configSimpleButtonText, configButtunTag, configLineGroup, configLine, configLinePipe, basicSettings, getBasicStyle } = configuration()
+      configWaterBoxLine, configValue, configStatus, configSimpleButtonText, configButtunTag, configLineGroup, configLine, configLinePipe, configUploadImg,
+      basicSettings, getBasicStyle } = configuration()
     let commonItems = ref(proxy.$store.state.commonItems) // 基本
     let chartItems = ref(proxy.$store.state.chartItems) // 组件
     let svgItems = ref(proxy.$store.state.svgContainerItems) // 图库
@@ -463,6 +513,7 @@ export default {
           }
         })
       }
+      getPicTypeData(true)
       getDevice()
     }
     /**
@@ -492,6 +543,166 @@ export default {
       svgItems.value = proxy.$store.state[name]
       svgItemsTypeTitle.value = title
       deviceItemTypeShow.value = false
+    }
+    let picTypeList = ref<any[]>([]) // 上传图片分组
+    let modalPicType = ref(false) // 上传图片分组弹窗
+    let currentPicType = ref('') // 当前上传图片分组
+    type PicType = {
+      picTypeId?: string,
+      pictypeName: string,
+      sort: number | null
+    }
+    let picTypeObj = ref<PicType>({ pictypeName: '', sort: null }) // 上传图片分组对象
+    let picTypeMethod = ref('') // 上传图片分组方法
+    /**
+    * @desc 取上传图片分组数据
+    * @param {Boolean} flag 是否取图片数据
+    */
+    function getPicTypeData (flag: boolean) {
+      proxy.$api.get('commonRoot', '/byzt/picType/web/list', {}, (r: any) => {
+        if (r.data.code === 0) {
+          picTypeList.value = r.data.data
+          if (flag) {
+            getPicData()
+          }
+        }
+      })
+    }
+    /**
+    * @desc 上传图片分组折叠面板点击
+    */
+    function picTypeCollapseExpand (e: any) {
+      if (e.length > 0) {
+        currentPicType.value = e[0]
+      }
+    }
+    /**
+    * @desc 新增上传图片分组
+    */
+    function addPicType () {
+      picTypeObj.value = { pictypeName: '', sort: null }
+      picTypeMethod.value = 'add'
+      modalPicType.value = true
+    }
+    /**
+    * @desc 修改上传图片分组
+    */
+    function editPicType (item: PicType) {
+      picTypeObj.value = item
+      picTypeObj.value.sort = typeof(item.sort) === 'string' ? parseInt(item.sort) : null
+      picTypeMethod.value = 'edit'
+      modalPicType.value = true
+    }
+    /**
+    * @desc 删除上传图片分组
+    */
+    function delPicType (item: PicType) {
+      proxy.$myMessage({
+        type: 'info',
+        MessageTitle: '确定删除此图片分组？该分组下的图片也将一并删除。',
+        submit: () => {
+          proxy.$myLoading.show()
+          proxy.$api.post('commonRoot', '/byzt/picType/web/delete', { id: item.picTypeId }, (r: IInterfaceData) => {
+            if (r.data.code === 0) {
+              proxy.$myMessage.success('删除成功')
+              getPicTypeData(false)
+            } else {
+              proxy.$myMessage.error1(r.data.msg)
+            }
+            proxy.$myLoading.close()
+          })
+        }
+      })
+    }
+    const picTypeValidate = ref({ // 表单验证
+      pictypeName: [
+        { required: true, message: '请填写分组名称', trigger: 'blur' }
+      ],
+      sort: [
+        { required: true, type: 'number', message: '请填写排序', trigger: 'blur' }
+      ]
+    })
+    const picTypeFrom = ref<FormInst | null>(null)
+    /**
+    * @desc 保存上传图片分组
+    */
+    function savePicType () {
+      picTypeFrom.value?.validate((errors: any) => {
+        if (!errors) {
+          proxy.$myLoading.show()
+          if (picTypeMethod.value === 'add') {
+            proxy.$api.post('commonRoot', '/byzt/picType/web/insert', picTypeObj.value, (r: IInterfaceData) => {
+              if (r.data.code === 0) {
+                proxy.$myMessage.success('保存成功')
+                getPicTypeData(false)
+                modalPicType.value = false
+              } else {
+                proxy.$myMessage.error1(r.data.msg)
+              }
+              proxy.$myLoading.close()
+            })
+          } else if (picTypeMethod.value === 'edit') {
+            proxy.$api.post('commonRoot', '/byzt/picType/web/update', picTypeObj.value, (r: IInterfaceData) => {
+              if (r.data.code === 0) {
+                proxy.$myMessage.success('保存成功')
+                getPicTypeData(false)
+                modalPicType.value = false
+              } else {
+                proxy.$myMessage.error1(r.data.msg)
+              }
+              proxy.$myLoading.close()
+            })
+          }
+        }
+      })
+    }
+    let picData = ref<{ [key: string]: any[] }>({}) // 图片数据
+    function getPicData () {
+      for (const iterator of picTypeList.value) {
+        getPicDataByType(iterator.picTypeId)
+      }
+    }
+    function getPicDataByType (picTypeId: string) {
+      proxy.$api.get('commonRoot', '/byzt/picData/web/list', { picTypeId: picTypeId }, (r: any) => {
+        if (r.data.code === 0) {
+          picData.value[picTypeId] = r.data.data
+        }
+      })
+    }
+    /**
+    * @desc 上传图片
+    */
+    function uploadImgSuccess (obj: IUploadResData) {
+      proxy.$myLoading.show()
+      proxy.$api.post('commonRoot', '/byzt/picData/web/insert', { ...obj, ...{ picTypeId: currentPicType.value } }, (r: IInterfaceData) => {
+        if (r.data.code === 0) {
+          getPicDataByType(currentPicType.value)
+        } else {
+          proxy.$myMessage.error1(r.data.msg)
+        }
+        proxy.$myLoading.close()
+      })
+    }
+    /**
+    * @desc 删除上传图片
+    */
+    function delPic (item: any) {
+      proxy.$myMessage({
+        type: 'info',
+        MessageTitle: '确定删除此图片？',
+        submit: () => {
+          proxy.$myLoading.show()
+          proxy.$api.post('commonRoot', '/byzt/picData/web/delete', { id: item.picDataId }, (r: IInterfaceData) => {
+            if (r.data.code === 0) {
+              proxy.$myMessage.success('删除成功')
+              getPicDataByType(currentPicType.value)
+            } else {
+              proxy.$myMessage.error1(r.data.msg)
+            }
+            proxy.$myLoading.close()
+          })
+        }
+      })
     }
     let dragObj = ref<any>({}) // 左侧拖动组件
     function dragstartLeft (item: any) {
@@ -688,7 +899,7 @@ export default {
     * @desc 拖动中
     */
     function dragmove (e: any) {
-      console.log(e)
+      // console.log(e)
       if (moveObj.value.category === 'line') {
         // 拖动端点或中点时不更新线条组
         if (moveLineAnchorObj.value.category !== 'line' && moveLineMiddleObj.value.category !== 'line') {
@@ -827,7 +1038,7 @@ export default {
           moveObjTarget.value = e.target.parent
           transformerNodes.value = [e.target.parent]
         } else if (['line'].includes(e.target.attrs.category) || e.target.attrs.type === 'pip-h') {
-          // moveObj.value = items.value.find(ele => ele.id === e.target.attrs.id)
+          moveObj.value = items.value.find(ele => ele.id === e.target.attrs.id)
           // 获取当前组件
           moveObjTarget.value = e.target.parent
           transformerNodes.value = [e.target.parent]
@@ -923,7 +1134,7 @@ export default {
       // console.log(groups)
       // console.log(selectionRectNode.value.getClientRect())
       let box = selectionRectNode.value.getClientRect()
-      let selected = groups.filter((shape) =>
+      let selected = groups.filter((shape: any) =>
         Konva.Util.haveIntersection(box, shape.getClientRect())
       )
       // console.log(selected)
@@ -1189,11 +1400,14 @@ export default {
     }
     return { util, uploadRoot, commonItems, chartItems, svgItems, imgItems, canvasItems, switchs, svgItemsTypeTitle, curItemListType, itemListShow,
       deviceItemTypeShow, fontFamilys,
-      init, setCurItemListType, toggleDeviceItemType, setSvgItems, dragstartLeft, drop, items,
+      init, setCurItemListType, toggleDeviceItemType, setSvgItems,
+      picTypeList, modalPicType, picTypeObj, picTypeValidate, picTypeCollapseExpand, addPicType, editPicType, delPicType, picTypeFrom, savePicType,
+      picData, uploadImgSuccess, delPic,
+      dragstartLeft, drop, items,
       configImg, configLabel, configTag, configText, configDatetime, configWeather, configDeviceImg, configWaterBoxGroup,
       configWaterBoxBack, configWaterBoxWater, configWaterBoxLine,
       configValue, configEcharts, liquidfillShapeList, configStatus, configSimpleButtonText, configButtunTag,
-      configLineGroup, configLine, configLinePipe, configLineAnchor, configLineMiddle,
+      configLineGroup, configLine, configLinePipe, configLineAnchor, configLineMiddle, configUploadImg,
       dragstartLineAnchor, dragmoveLineAnchor, dragendLineAnchor, dragstartLineMiddle, dragmoveLineMiddle, dragendLineMiddle,
       moveObj, dragstart, dragmove, dragend, transform, transformend, stageClick, showSelectionRect, configSelectionRect, stageMousedown, stageMousemove, stageMouseup,
       contextmenuShow, contextMenuItem, contextMenuItemIndex, contextMenu, stageContextmenu, contextMenuClose, moveUp, moveDown, moveTop, moveBottom, itemCopy, delItem,

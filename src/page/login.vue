@@ -24,7 +24,7 @@
 </template>
 <script lang="ts" setup>
 import common from '@/page/mixins/common' // 基本混入
-import { getCurrentInstance, reactive, ref } from 'vue'
+import { getCurrentInstance, ref } from 'vue'
 import { FormInst } from 'naive-ui'
 import { IInterfaceData } from '@/page/interface/interface'
 const proxy: any = getCurrentInstance()!.proxy
@@ -35,7 +35,7 @@ const loginObj = ref({ // 登录用户对象
   password: ''
 })
 const loading = ref(false)
-const rules = reactive({ // 验证规则
+const rules = ref({ // 验证规则
   userName: [
     { required: true, message: '用户名不能为空', trigger: 'blur' }
   ],

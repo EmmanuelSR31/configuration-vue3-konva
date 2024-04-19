@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import common from '@/page/mixins/common' // 基本混入
-import { getCurrentInstance, reactive, ref, computed, onMounted } from 'vue'
+import { getCurrentInstance, ref, computed, onMounted } from 'vue'
 import { IInterfaceData, ITableSearch } from '@/page/interface/interface'
 import { Search, Refresh } from '@vicons/ionicons5'
 export default {
@@ -79,8 +79,8 @@ export default {
     let { util, arrRemoveEmptyChildren } = common()
     const searchList = ref<ITableSearch[]>([]) // 搜索项
     let searchObj: any = ref({}) // 搜索对象
-    let initialSearchObj = reactive({}) // 初始搜索对象
-    const selectLoading: any = reactive({}) // 数据加载
+    let initialSearchObj = ref({}) // 初始搜索对象
+    const selectLoading: any = ref({}) // 数据加载
     const formItemWidth = computed(() => 100 / props.itemNumber + '%') // 搜索框宽度
     const dateTypeOptions = ref([{ value: 1, label: '当天' }, { value: 2, label: '当月' }, { value: 3, label: '当年' }, { value: 4, label: '自定义' }]) // 日期类型选项
     let dateType = ref(4) // 日期类型
@@ -107,7 +107,7 @@ export default {
           iterator.selectData = arrRemoveEmptyChildren(iterator.selectData!)
         }
       }
-      initialSearchObj = util.value.deepClone(searchObj.value)
+      initialSearchObj.value = util.value.deepClone(searchObj.value)
       if (hasDefaultValue) {
         emit('search')
       }
@@ -122,7 +122,7 @@ export default {
     * @desc 重置
     */
     function reset () {
-      searchObj.value = util.value.deepClone(initialSearchObj)
+      searchObj.value = util.value.deepClone(initialSearchObj.value)
       emit('search')
     }
     /**
@@ -141,11 +141,11 @@ export default {
           }
         }
         toObj.selectData = []
-        selectLoading[toObj.text] = true
+        selectLoading.value[toObj.text] = true
         proxy.$api[item.changeAjax.method](item.changeAjax.rootName, item.changeAjax.url, obj, (r: IInterfaceData) => {
           const arr = item.changeAjax.callback(r)
           toObj.selectData = arr
-          selectLoading[toObj.text] = false
+          selectLoading.value[toObj.text] = false
         })
       }
     }

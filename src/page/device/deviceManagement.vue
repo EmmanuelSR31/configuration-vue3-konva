@@ -39,8 +39,7 @@ import deviceCom from './deviceCom.vue' // 弹窗组件
 import deviceLeftCom from './deviceLeftCom.vue'
 import deviceDataManagement from './deviceDataManagement.vue'
 import runTimeCom from './runTimeCom.vue'
-import tablePage from '@/page/components/tablePage.vue' // 表格分页组件
-import tableSearch from '@/page/components/tableSearch.vue' // 表格搜索组件
+import { tablePage, tableSearch } from '@/page/components/index'
 import { IInterfaceData } from '@/page/interface/interface'
 import { getCurrentInstance, ref, onMounted, onBeforeUnmount, h, provide } from 'vue'
 import { NDropdown, NIcon } from 'naive-ui'

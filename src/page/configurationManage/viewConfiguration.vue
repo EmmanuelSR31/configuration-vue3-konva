@@ -136,8 +136,8 @@ import common from '@/page/mixins/common' // 基本混入
 import configuration from './configuration'
 import echartLine from './echart-line.vue'
 import echartLiquidfill from './echart-liquidfill.vue'
-import numberKeyboard from '@/page/components/number-keyboard.vue'
-import { getCurrentInstance, ref, reactive } from 'vue'
+import { numberKeyboard } from '@/page/components/index'
+import { getCurrentInstance, ref } from 'vue'
 import { IInterfaceData } from '@/page/interface/interface'
 import Konva from 'konva'
 export default {
@@ -321,7 +321,7 @@ export default {
     }
     let loginObj = ref({ userName: '', userPassword: '' }) // 二次授权对象
     let loginModal = ref(false)
-    const ruleValidate = reactive({ // 二次授权表单验证
+    const ruleValidate = ref({ // 二次授权表单验证
       userName: [
         { required: true, message: '用户名不能为空', trigger: 'blur' }
       ],

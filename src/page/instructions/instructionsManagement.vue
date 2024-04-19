@@ -28,12 +28,10 @@ import common from '@/page/mixins/common' // 基本混入
 import table from '@/page/mixins/table' // 表格列表混入
 import useCommandComponent from '@/hooks/useCommandComponent'
 import instructionsCom from './instructionsCom.vue' // 弹窗组件
-import tablePage from '@/page/components/tablePage.vue' // 表格分页组件
-import tableSearch from '@/page/components/tableSearch.vue' // 表格搜索组件
 import { IInterfaceData } from '@/page/interface/interface'
 import { getCurrentInstance, ref, h, provide } from 'vue'
 import { Add } from '@vicons/ionicons5'
-import editor from '@/page/components/editor.vue'
+import { editor, tablePage, tableSearch } from '@/page/components/index'
 export default {
   components: { tablePage, tableSearch, Add, editor },
   setup () {

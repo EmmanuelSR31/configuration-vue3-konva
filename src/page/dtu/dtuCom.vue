@@ -88,9 +88,9 @@ import common from '@/page/mixins/common' // 基本混入
 import table from '@/page/mixins/table' // 表格列表混入
 import useCommandComponent from '@/hooks/useCommandComponent'
 import dataCom from './dataCom.vue' // 弹窗组件
-import tablePage from '@/page/components/tablePage.vue' // 表格分页组件
+import { tablePage } from '@/page/components/index'
 import { IInterfaceData } from '@/page/interface/interface'
-import { getCurrentInstance, ref, reactive, h, provide, inject, onBeforeUnmount } from 'vue'
+import { getCurrentInstance, ref, h, provide, inject, onBeforeUnmount } from 'vue'
 import { FormInst } from 'naive-ui'
 import { Add } from '@vicons/ionicons5'
 import { InfoCircleOutlined, CheckOutlined } from '@vicons/antd'
@@ -120,7 +120,7 @@ export default {
     }
     let dataObj = ref<IDataObj>({ dtuChildId: '', cycleSecond: null, dtuChildPort: null }) // 数据对象
     let method = ref('')
-    const ruleValidate = reactive({ // 表单验证
+    const ruleValidate = ref({ // 表单验证
       dtuChildTypeEnum: [
         { required: true, message: '请选择设备型号', trigger: 'change' }
       ],

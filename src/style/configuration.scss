@@ -96,6 +96,12 @@
   padding: 5px;
   background: #fff;
   z-index: 10;
+  .n-collapse-item__header-extra {
+    i {
+      margin-left: 15px;
+      cursor: pointer;
+    }
+  }
 }
 .config-center{
   height: calc(100% - 50px);
@@ -176,6 +182,9 @@
   .n-color-picker-trigger__value {
     display: none;
   }
+  .n-button, .n-button:not(.n-button--disabled):hover {
+    background-color: #fff;
+  }
 }
 .config-item-top{
   text-align: center;
@@ -237,21 +246,38 @@
   overflow: auto;
 }
 .upload-img-list{
+  display: flex;
+  flex-wrap: wrap;
   li{
+    width: 85px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
+    border: 1px solid #fff;
+    cursor: move;
     &:hover{
+      border: 1px solid #efefef;
       .upload-img-del{
         opacity: 1;
       }
+    }
+    img{
+      max-width: 100%;
+      min-width: 50px;
+      max-height: 80px;
     }
   }
 }
 .upload-img-del{
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
   color: #333;
-  font-size: .2rem;
+  cursor: pointer;
   opacity: 0;
 }
 .config-common-item-list{

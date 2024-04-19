@@ -78,13 +78,13 @@
     <div class="modal-field-con">
       <div class="modal_form1">
         <n-form ref="passForm" :model="passwordObj" :rules="passValidate" label-width="110px">
-          <n-form-item label="旧密码" prop="oldPass">
+          <n-form-item label="旧密码" path="oldPass">
             <n-input v-model:value="passwordObj.oldPass" type="password"></n-input>
           </n-form-item>
-          <n-form-item label="新密码" prop="newPass">
+          <n-form-item label="新密码" path="newPass">
             <n-input v-model:value="passwordObj.newPass" type="password"></n-input>
           </n-form-item>
-          <n-form-item label="确认新密码" prop="newPass1">
+          <n-form-item label="确认新密码" path="newPass1">
             <n-input v-model:value="passwordObj.newPass1" type="password"></n-input>
           </n-form-item>
         </n-form>
@@ -98,8 +98,8 @@
 </template>
 <script lang="ts" setup>
 import common from '@/page/mixins/common' // 基本混入
-import openedPageTags from './components/opened-page-tags.vue'
-import { getCurrentInstance, reactive, ref, computed, onMounted, h, Component } from 'vue'
+import { openedPageTags } from './components/index'
+import { getCurrentInstance, ref, computed, onMounted, h, Component } from 'vue'
 import { NIcon } from 'naive-ui'
 import { ChevronDown, SettingsOutline, ExitOutline, PersonCircleOutline, LogOutOutline } from '@vicons/ionicons5'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@vicons/antd'
@@ -132,7 +132,7 @@ const dropdownOptions = ref([
 ])
 const modalUser = ref(false) // 个人资料对话框是否显示
 const modalPassword = ref(false) // 修改密码对话框是否显示
-const userValidate = reactive({ // 表单验证
+const userValidate = ref({ // 表单验证
   /* realName: [
     { required: true, message: '请填写真实名称', trigger: 'blur' }
   ],
@@ -146,17 +146,17 @@ const userValidate = reactive({ // 表单验证
     { required: true, message: '请填写密码', trigger: 'blur' }
   ]
 })
-let passwordObj = reactive({ oldPass: '', newPass: '', newPass1: '' }) // 密码对象
+let passwordObj = ref({ oldPass: '', newPass: '', newPass1: '' }) // 密码对象
 const validatePass = (rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入新密码'))
-  } else if (value !== passwordObj.newPass) {
+  } else if (value !== passwordObj.value.newPass) {
     callback(new Error('2次密码输入不一致'))
   } else {
     callback()
   }
 }
-const passValidate = reactive({ // 密码表单验证
+const passValidate = ref({ // 密码表单验证
   oldPass: [
     { required: true, message: '请输入旧密码', trigger: 'blur' }
   ],
@@ -167,8 +167,8 @@ const passValidate = reactive({ // 密码表单验证
     { validator: validatePass, trigger: 'blur' }
   ]
 })
-let systemObj = reactive({ headerIconRelativePath: '', headerSystemName: '' }) // 系统名称对象
-let menuListAll: IMenu[] = reactive([]) // 全部菜单
+let systemObj = ref({ headerIconRelativePath: '', headerSystemName: '' }) // 系统名称对象
+let menuListAll = ref<Array<IMenu>>([]) // 全部菜单
 let menuHeight = computed(() => document.body.clientHeight) // 表格高度
 let pageTagsList = computed(() => proxy.$store.state.pageOpenedList) // 打开的页面列表
 /**
@@ -177,8 +177,8 @@ let pageTagsList = computed(() => proxy.$store.state.pageOpenedList) // 打开�
 function init () {
   proxy.$api.get('commonRoot', '/module/skin/get', {}, (r: IInterfaceData) => {
     if (r.data.code === 0) {
-      systemObj = r.data.data
-      document.title = systemObj.headerSystemName
+      systemObj.value = r.data.data
+      document.title = systemObj.value.headerSystemName
     } else {
       proxy.$myMessage.error1(r.data.msg)
     }
@@ -191,7 +191,7 @@ function init () {
       }
       menuList.value = arr
       menuOptions.value = arr
-      menuListAll = util.value.arrayFlatten(menuList.value)
+      menuListAll.value = util.value.arrayFlatten(menuList.value)
     } else {
       proxy.$myMessage.error1(r.data.msg)
       sessionStorage.user = ''
@@ -218,7 +218,7 @@ function handleClickUserDropdown (name: string) {
   if (name === 'ownSpace') {
     modalUser.value = true
   } else if (name === 'editPassword') {
-    passwordObj = { oldPass: '', newPass: '', newPass1: '' }
+    passwordObj.value = { oldPass: '', newPass: '', newPass1: '' }
     modalPassword.value = true
   } else if (name === 'logout') {
     exit()
@@ -243,7 +243,7 @@ function exit () {
 function savePassword () {
   proxy.$refs.passForm.validate((errors: any) => {
     if (!errors) {
-      proxy.$api.get('commonRoot', '/module/user/editPassword', { oldPassword: passwordObj.oldPass, newPassword: passwordObj.newPass, token: sessionStorage.token }, (r: IInterfaceData) => {
+      proxy.$api.get('commonRoot', '/module/user/editPassword', { oldPassword: passwordObj.value.oldPass, newPassword: passwordObj.value.newPass, token: sessionStorage.token }, (r: IInterfaceData) => {
         if (r.data.code === 0) {
           proxy.$myMessage.success('密码修改成功')
           modalPassword.value = false
@@ -279,7 +279,7 @@ function saveUser () {
 function getBreadcrumbName (obj: IMenu) {
   if (!util.value.isEmpty(obj.menuStructPid) && obj.menuStructPid !== 'topMenu') {
     breadcrumblist.value.push(obj.menuStructName)
-    const temp = menuListAll.find(ele => ele.menuStructId === obj.menuStructPid) as IMenu
+    const temp = menuListAll.value.find(ele => ele.menuStructId === obj.menuStructPid) as IMenu
     getBreadcrumbName(temp)
   } else {
     breadcrumblist.value.push(obj.menuStructName)
@@ -290,7 +290,7 @@ function getBreadcrumbName (obj: IMenu) {
 * @param {String} url 链接对象
 */
 function routeTo (url: string) {
-  let temp = menuListAll.find(ele => ele.menuStructId === url) as IMenu
+  let temp = menuListAll.value.find(ele => ele.menuStructId === url) as IMenu
   let obj = { text: temp.menuStructName, url: temp.menuStructUrl, id: temp.menuStructId, pid: temp.menuStructPid }
   breadcrumblist.value = []
   getBreadcrumbName(temp)

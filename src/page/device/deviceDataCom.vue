@@ -45,7 +45,7 @@
 <script lang="ts">
 import common from '@/page/mixins/common' // 基本混入
 import { IInterfaceData } from '@/page/interface/interface'
-import { getCurrentInstance, ref, reactive, inject } from 'vue'
+import { getCurrentInstance, ref, inject } from 'vue'
 import { FormInst } from 'naive-ui'
 import { Codemirror } from 'vue-codemirror'
 export default {
@@ -63,7 +63,7 @@ export default {
     const parentChangePage:any = inject('parentChangePage')
     const formValidate = ref<FormInst | null>(null)
     let dataObj = ref({ dataName: '', dataNote: '', dataUnit: '', dataType: '', dtuId: '', dtuChildId: '', dtuChildDataId: '', sort: null, deviceId: '', formula: '' }) // 数据对象
-    const ruleValidate = reactive({ // 表单验证
+    const ruleValidate = ref({ // 表单验证
       dataName: [
         { required: true, message: '请填写参数名称', trigger: 'blur' }
       ],

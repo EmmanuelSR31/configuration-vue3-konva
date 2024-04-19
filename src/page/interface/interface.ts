@@ -1,17 +1,8 @@
-export interface IStringArr {
-  arr: string[]
-}
-export interface IAnyArr {
-  arr: any[]
-}
 export interface IUploadResData {
   ossId: string,
   relativePath: string,
   fileName: string,
   aliyunOssPath?: string
-}
-export interface IUploadArr {
-  arr: IUploadResData[]
 }
 export interface ITableParams {
   row: any,
@@ -33,9 +24,6 @@ export interface ITableSearch {
   endDateText?: string,
   showTypeSelect?: boolean,
   width?: string
-}
-export interface ITableSearchArr {
-  arr: ITableSearch[]
 }
 export interface IInterfaceData {
   data: any,

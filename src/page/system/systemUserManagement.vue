@@ -33,8 +33,7 @@ import table from '@/page/mixins/table' // 表格列表混入
 import useCommandComponent from '@/hooks/useCommandComponent'
 import systemUserCom from './systemUserCom.vue' // 角色弹窗组件
 import organizationCom from './organizationCom.vue'
-import tablePage from '@/page/components/tablePage.vue' // 表格分页组件
-import tableSearch from '@/page/components/tableSearch.vue' // 表格搜索组件
+import { tablePage, tableSearch } from '@/page/components/index'
 import { IInterfaceData } from '@/page/interface/interface'
 import { getCurrentInstance, ref, onMounted, h, provide } from 'vue'
 import { Add } from '@vicons/ionicons5'

@@ -71,14 +71,12 @@
 import common from '@/page/mixins/common' // 基本混入
 import table from '@/page/mixins/table' // 表格列表混入
 import editConfiguration from './editConfiguration.vue' // 弹窗组件
-import tablePage from '@/page/components/tablePage.vue' // 表格分页组件
-import tableSearch from '@/page/components/tableSearch.vue' // 表格搜索组件
 import { IInterfaceData } from '@/page/interface/interface'
 import { getCurrentInstance, ref, nextTick, h } from 'vue'
 import { NImage } from 'naive-ui'
 import { Add } from '@vicons/ionicons5'
 export default {
-  components: { tablePage, tableSearch, editConfiguration, Add },
+  components: { editConfiguration, Add },
   setup () {
     const proxy: any = getCurrentInstance()!.proxy
     let { util, uploadRoot } = common()

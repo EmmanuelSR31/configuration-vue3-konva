@@ -39,7 +39,7 @@
 <script lang="ts">
 import common from '@/page/mixins/common' // 基本混入
 import { IInterfaceData } from '@/page/interface/interface'
-import { getCurrentInstance, ref, reactive } from 'vue'
+import { getCurrentInstance, ref } from 'vue'
 import { FormInst } from 'naive-ui'
 import { InfoCircleOutlined } from '@vicons/antd'
 export default {
@@ -52,7 +52,7 @@ export default {
     let { util } = common()
     const formValidate = ref<FormInst | null>(null)
     let dataObj = ref({ deviceId: '', dtuId: '', dtuChildId: '', powerOnDtuChildDataId: '', startupCompareEnum: '', powerOnValue: '', powerOffDtuChildDataId: '', workCompareEnum: '', powerOffValue: '', workDtuChildDataId: '', alarmCompareEnum: '', workValue: '' }) // 数据对象
-    const ruleValidate = reactive({ // 表单验证
+    const ruleValidate = ref({ // 表单验证
     })
     let deviceStateCompareEnumList = ref<Array<{ id: string, text: string }>>([])
     let dtuAllList = ref<Array<any>>([])
