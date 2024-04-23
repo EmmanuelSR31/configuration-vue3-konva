@@ -503,7 +503,7 @@ export default {
       id.value = i
       if (method.value === 'add') {
         basicSettings.value.name = obj.name
-        basicSettings.value.cover = obj.cover
+        basicSettings.value.coverChart = obj.coverChart
       } else if (method.value === 'edit') {
         proxy.$api.post('commonRoot', '/v2/apps/graphics/obtainDeviceGraphicsData', { id: id.value }, (r: any) => {
           if (r.data.status) {
@@ -892,7 +892,7 @@ export default {
     * @desc 拖动开始
     */
     function dragstart (item: any, e: any) {
-      console.log(e)
+      // console.log(e)
       moveObj.value = item
     }
     /**
@@ -915,7 +915,7 @@ export default {
     * @desc 拖动结束
     */
     function dragend (e: any) {
-      console.log(e)
+      // console.log(e)
       // 多选情况
       if (transformerNodes.value.length > 1) {
         let obj = items.value.find(ele => ele.id === e.target.attrs.id)
@@ -949,17 +949,36 @@ export default {
     */
     function transform (e: any) {
       // console.log(e)
-      if (['text', 'datetime'].includes(e.target.attrs.type) || ['value', 'simpleButton', 'button'].includes(e.target.attrs.category)) {
-        // 修正旋转时，比例改变
-        if (e.target.attrs.scaleX > 0.9999 && e.target.attrs.scaleX < 1.0001 && e.target.attrs.scaleY > 0.9999 && e.target.attrs.scaleY < 1.0001) {
-          e.target.attrs.scaleX = 1
-          e.target.attrs.scaleY = 1
+      // 多选情况
+      if (transformerNodes.value.length > 1) {
+        if (['text', 'datetime'].includes(e.target.attrs.type) || ['value', 'simpleButton', 'button'].includes(e.target.attrs.category)) {
+          let obj = items.value.find(ele => ele.id === e.target.attrs.id)
+          if (obj !== undefined) {
+            // 修正旋转时，比例改变
+            if (e.target.attrs.scaleX > 0.9999 && e.target.attrs.scaleX < 1.0001 && e.target.attrs.scaleY > 0.9999 && e.target.attrs.scaleY < 1.0001) {
+              e.target.attrs.scaleX = 1
+              e.target.attrs.scaleY = 1
+            }
+            // 只改变大小，不改变比例
+            obj.width = obj.width * e.target.attrs.scaleX
+            obj.height = obj.height * e.target.attrs.scaleY
+            obj.scaleX = 1
+            obj.scaleY = 1
+          }
         }
-        // 只改变大小，不改变比例
-        moveObj.value.width = moveObj.value.width * e.target.attrs.scaleX
-        moveObj.value.height = moveObj.value.height * e.target.attrs.scaleY
-        moveObj.value.scaleX = 1
-        moveObj.value.scaleY = 1
+      } else {
+        if (['text', 'datetime'].includes(e.target.attrs.type) || ['value', 'simpleButton', 'button'].includes(e.target.attrs.category)) {
+          // 修正旋转时，比例改变
+          if (e.target.attrs.scaleX > 0.9999 && e.target.attrs.scaleX < 1.0001 && e.target.attrs.scaleY > 0.9999 && e.target.attrs.scaleY < 1.0001) {
+            e.target.attrs.scaleX = 1
+            e.target.attrs.scaleY = 1
+          }
+          // 只改变大小，不改变比例
+          moveObj.value.width = moveObj.value.width * e.target.attrs.scaleX
+          moveObj.value.height = moveObj.value.height * e.target.attrs.scaleY
+          moveObj.value.scaleX = 1
+          moveObj.value.scaleY = 1
+        }
       }
     }
     let transformerNodes = ref<Array<any>>([]) // 变形选中的组件数组
@@ -983,9 +1002,10 @@ export default {
         moveObj.value.x = e.target.attrs.x
         moveObj.value.scaleX = e.target.attrs.scaleX
         moveObj.value.scaleY = e.target.attrs.scaleY
+        // 只改变大小，不改变比例
         /* moveObj.value.width = moveObj.value.width * e.target.attrs.scaleX
-        moveObj.value.height = moveObj.value.height * e.target.attrs.scaleY */
-        /* moveObj.value.scaleX = 1
+        moveObj.value.height = moveObj.value.height * e.target.attrs.scaleY
+        moveObj.value.scaleX = 1
         moveObj.value.scaleY = 1 */
         moveObj.value.rotation = e.target.attrs.rotation
         console.log(moveObj.value)
@@ -997,7 +1017,7 @@ export default {
     * @desc 点击判断选中
     */
     function stageClick (e: any) {
-      console.log(e)
+      // console.log(e)
       // 右键点击
       if (e.evt.button === 2) {
         return
@@ -1074,7 +1094,7 @@ export default {
         transformerNode.nodes(nodes)
         transformerNodes.value = nodes
       }
-      console.log(transformerNodes.value)
+      // console.log(transformerNodes.value)
     }
     let showSelectionRect = ref(false) // 显示选择框
     // 选择框位置
@@ -1140,6 +1160,7 @@ export default {
       // console.log(selected)
       let transformerNode = proxy.$refs.transformer.getNode()
       transformerNode.nodes(selected)
+      transformerNodes.value = selected
     }
     let contextmenuShow = ref(false) // 是否显示右键菜单
     let contextMenuItem = ref<any>({}) // 打开右键菜单的对象
@@ -1368,7 +1389,7 @@ export default {
       proxy.$myLoading.show()
       if (method.value === 'add') {
         let temp = util.value.getDate(18)
-        proxy.$api.post('commonRoot', '/v2/apps/graphics/insert', { title: basicSettings.value.name, coverChart: 'aaa', graphicsJson: jsonStr, publishingLogo: 0, addDate: temp, addPople: 'admin' }, (r: any) => {
+        proxy.$api.post('commonRoot', '/v2/apps/graphics/insert', { title: basicSettings.value.name, coverChart: basicSettings.value.coverChart, graphicsJson: jsonStr, publishingLogo: 0, addDate: temp, addPople: 'admin' }, (r: any) => {
           if (r.data.status) {
             proxy.$myMessage.success('新增成功')
             proxy.$emit('save-success', true)
@@ -1378,7 +1399,7 @@ export default {
           proxy.$myLoading.close()
         })
       } else if (method.value === 'edit') {
-        proxy.$api.post('commonRoot', '/v2/apps/graphics/updateGraphics', { id: id.value, title: basicSettings.value.name, coverChart: basicSettings.value.cover, graphicsJson: jsonStr }, (r: any) => {
+        proxy.$api.post('commonRoot', '/v2/apps/graphics/updateGraphics', { id: id.value, title: basicSettings.value.name, coverChart: basicSettings.value.coverChart, graphicsJson: jsonStr }, (r: any) => {
           if (r.data.status) {
             proxy.$myMessage.success('修改成功')
             proxy.$emit('save-success', false)

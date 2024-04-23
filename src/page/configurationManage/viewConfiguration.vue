@@ -68,6 +68,9 @@
               <v-line :config="configLinePipe(item)" :ref="'linePipe' + item.id"></v-line>
             </v-group>
           </template>
+          <template v-else-if="item.type === 'uploadImg'">
+            <v-image :config="configUploadImg(item)"></v-image>
+          </template>
         </template>
       </v-layer>
     </v-stage>
@@ -146,8 +149,8 @@ export default {
     const proxy: any = getCurrentInstance()!.proxy
     let { util, uploadRoot } = common()
     let { method, id, items, configImg, configLabel, configTag, configText, configDatetime, configDeviceImg, configWaterBoxGroup, configWaterBoxBack, configWaterBoxWater,
-      configWaterBoxLine, configValue, configStatus, configSimpleButtonText, configButtunTag, configLineGroup, configLine, configLinePipe, basicSettings, getBasicStyle,
-      itemStyle } = configuration()
+      configWaterBoxLine, configValue, configStatus, configSimpleButtonText, configButtunTag, configLineGroup, configLine, configLinePipe, configUploadImg,
+      basicSettings, getBasicStyle, itemStyle } = configuration()
     id.value = proxy.$route.params.id
     method.value = 'view'
     function init () {
@@ -351,7 +354,8 @@ export default {
       configImg, configLabel, configTag, configText, configDatetime, configDeviceImg, configWaterBoxGroup,
       configWaterBoxBack, configWaterBoxWater, configWaterBoxLine,
       configValue, configStatus, configSimpleButtonText, configButtunTag,
-      configLineGroup, configLine, configLinePipe, clickBut, editVal, modalEdit, showKeyboard, showEdit, modalEditShow, editSave, numberEvent, deleteEvent,
+      configLineGroup, configLine, configLinePipe, configUploadImg,
+      clickBut, editVal, modalEdit, showKeyboard, showEdit, modalEditShow, editSave, numberEvent, deleteEvent,
       loginObj, loginModal, ruleValidate, login,
       handleMouseEnter, handleMouseLeave,
       basicSettings, getBasicStyle, itemStyle }

@@ -404,7 +404,7 @@ a, a:hover, a:focus, a:active {
   align-items: center;
   margin-top: .4rem;
   .n-button {
-    width: 90px;
+    min-width: 90px;
     height: 36px;
   }
 }

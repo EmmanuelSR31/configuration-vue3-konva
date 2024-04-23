@@ -1,6 +1,6 @@
 <template>
   <div class="upload-com">
-    <div class="upload-li upload-li-single" v-if="dataObj.relativePath !== null && dataObj.relativePath !== undefined && dataObj.relativePath !== ''">
+    <div class="upload-li upload-li-single" v-if="showFile && dataObj.relativePath !== null && dataObj.relativePath !== undefined && dataObj.relativePath !== ''">
       <n-image v-if="isImg" :style="{height: imgHeight + 'px'}" v-show="dataObj.relativePath !== null && dataObj.relativePath !== undefined && dataObj.relativePath !== ''" :src="uploadRoot + '/oss/' + dataObj.relativePath"></n-image>
       <div v-if="!isImg" v-show="dataObj.relativePath !== null && dataObj.relativePath !== undefined && dataObj.relativePath !== ''">
         <a :href="uploadRoot + '/oss/' + dataObj.relativePath" target="_blank">{{dataObj.fileName !== null && dataObj.fileName !== undefined ? dataObj.fileName : '文件'}}</a>
@@ -59,7 +59,11 @@ export default {
       type: String,
       default: '点击选择'
     },
-    fileObj: Object as any // 附件数据
+    fileObj: Object as any, // 附件数据
+    showFile: {
+      type: Boolean,
+      default: true
+    }
   },
   components: { CloseCircleOutline },
   setup (props, { emit }) {

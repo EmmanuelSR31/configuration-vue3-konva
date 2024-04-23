@@ -11,20 +11,23 @@
       <n-button type="primary" @click="changePage(1, pageSize)">
         <template #icon>
           <n-icon size="17">
-            <add />
+            <refresh />
           </n-icon>
         </template>刷新
       </n-button>
     </div>
   <ul class="config-list">
     <li v-for="(item, index) in data" :key="index">
-      <div class="config-li-img-con">
+      <div class="config-li-img-con" @mouseenter="configLiEnter(item)">
         <template v-if="item.coverChart === '' || item.coverChart === undefined || item.coverChart === null">
           <img src="/assets/img/config-temp.png">
         </template>
         <template v-else>
           <img :src="uploadRoot + '/oss/' + item.coverChart">
         </template>
+        <div class="config-li-img-btn">
+          <upload-single :action="uploadRoot + '/module/oss/upload'" :fileObj="{ossId: '', fileName: '', relativePath: ''}" @upload-success="upfileSuccessCover" isImg accept="image/*" buttonTitle="更换缩略图" :showFile="false" :isPreview="true"></upload-single>
+        </div>
         <div class="config-li-title">{{item.title}}</div>
       </div>
       <div class="config-li-btn">
@@ -44,14 +47,16 @@
           <span>基本信息</span>
         </div>
         <n-form-item label="应用封面">
-          <n-upload :action="uploadRoot + '/module/oss/upload'" accept="image/*" :headers="{token: token}" :on-finish="upfileSuccess" :on-error="upfileError" :show-file-list="false" ref="upload">
-            <template v-if="dataObj.cover === '' || dataObj.cover === null || dataObj.cover === undefined">
+          <div>
+            <template v-if="dataObj.coverChart === '' || dataObj.coverChart === null || dataObj.coverChart === undefined">
               <img src="/assets/img/config-temp.png">
             </template>
             <template v-else>
-              <img :src="uploadRoot + '/oss/' + dataObj.cover">
+              <img :src="uploadRoot + '/oss/' + dataObj.coverChart" style="max-width: 250px;">
             </template>
-          </n-upload>
+            <br>
+            <upload-single :action="uploadRoot + '/module/oss/upload'" :fileObj="{ossId: '', fileName: '', relativePath: dataObj.coverChart}" @upload-success="upfileSuccess" isImg accept="image/*" :showFile="false" :isPreview="true"></upload-single>
+          </div>
         </n-form-item>
         <n-form-item label="应用名称">
           <n-input v-model:value="dataObj.name" placeholder="请输入应用名称"></n-input>
@@ -62,7 +67,7 @@
       </div>
     </div>
   </n-modal>
-  <div v-show="showCom" style="position: fixed;top: 0;bottom: 0;left: 0;right: 0;z-index: 10;background-color: #fff;">
+  <div v-if="showCom" style="position: fixed;top: 0;bottom: 0;left: 0;right: 0;z-index: 10;background-color: #fff;">
     <edit-configuration @save-success="saveSuccess" @close="closeModal" ref="editConfiguration"></edit-configuration>
   </div>
 </div>
@@ -71,19 +76,20 @@
 import common from '@/page/mixins/common' // 基本混入
 import table from '@/page/mixins/table' // 表格列表混入
 import editConfiguration from './editConfiguration.vue' // 弹窗组件
-import { IInterfaceData } from '@/page/interface/interface'
+import { IInterfaceData, IUploadResData } from '@/page/interface/interface'
 import { getCurrentInstance, ref, nextTick, h } from 'vue'
 import { NImage } from 'naive-ui'
-import { Add } from '@vicons/ionicons5'
+import { Add, Refresh } from '@vicons/ionicons5'
+import uploadSingle from '@/page/components/uploadSingle.vue'
 export default {
-  components: { editConfiguration, Add },
+  components: { editConfiguration, Add, Refresh, uploadSingle },
   setup () {
     const proxy: any = getCurrentInstance()!.proxy
     let { util, uploadRoot } = common()
     let { totalRows, data, selectObj, showCom, method, title, comObj } = table()
     let currentPage = ref(1)
     let pageSize = ref(18)
-    let dataObj = ref({ name: '', cover: '' }) // 数据对象
+    let dataObj = ref({ name: '', coverChart: '' }) // 数据对象
     let token = sessionStorage.token
     let baseModal = ref(false)
     /**
@@ -107,20 +113,14 @@ export default {
     function add () {
       title.value = '新增组态'
       method.value = 'add'
-      dataObj.value = { name: '', cover: '' }
+      dataObj.value = { name: '', coverChart: '' }
       baseModal.value = true
     }
     /**
     * @desc 上传成功的回调
-    * @param {Object} res 返回
     */
-    function upfileSuccess (res: any) {
-      if (res.code === 0) {
-        proxy.$myMessage.success('上传成功')
-        dataObj.value.cover = res.data.relativePath
-      } else {
-        proxy.$myMessage.error1(res.msg)
-      }
+    function upfileSuccess (obj: IUploadResData) {
+      dataObj.value.coverChart = obj.relativePath
     }
     function upfileError () {
       proxy.$myMessage.error1('上传失败')
@@ -181,8 +181,23 @@ export default {
       })
       window.open(routeUrl.href)
     }
+    let currentItem = ref({ id: '' })
+    function configLiEnter (item: any) {
+      currentItem.value = item
+    }
+    function upfileSuccessCover (obj: IUploadResData) {
+      proxy.$api.post('commonRoot', '/v2/apps/graphics/updateCoverChart', { id: currentItem.value.id, coverChart: obj.relativePath }, (r: IInterfaceData) => {
+        if (r.data.status) {
+          // proxy.$myMessage.success('修改成功')
+          changePage(1, pageSize.value)
+        } else {
+          proxy.$myMessage.error1(r.data.msg)
+        }
+      })
+    }
     return {
-      uploadRoot, currentPage, pageSize, dataObj, token, baseModal, changePage, add, upfileSuccess, upfileError, addNext, edit, saveSuccess, closeModal, del, view, totalRows, data, showCom, method, title, comObj
+      uploadRoot, currentPage, pageSize, dataObj, token, baseModal, changePage, add, upfileSuccess, upfileError, addNext, edit, saveSuccess, closeModal, del, view,
+      currentItem, configLiEnter, upfileSuccessCover, totalRows, data, showCom, method, title, comObj
     }
   }
 }
@@ -262,6 +277,34 @@ export default {
   img{
     width: 100%;
     height: 177px;
+  }
+  &:hover {
+    .config-li-img-btn {
+      opacity: 1;
+    }
+  }
+}
+.config-li-img-btn {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, .5);
+  opacity: 0;
+  transition: all .3s;
+  .n-upload {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    .n-button {
+      color: #fff;
+    }
   }
 }
 .config-li-icon{

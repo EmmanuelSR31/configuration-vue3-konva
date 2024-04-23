@@ -38,9 +38,23 @@
         <div style="width: 100%;display: flex;align-items: center;">
           <n-select v-model:value="dataObj.serialPort" placeholder="请选择串口号" :options="portList" value-field="id" label-field="text" style="width: 140px;"></n-select>
           <div style="display: flex;font-size: 14px;align-items: center;margin-left: 20px;color: #999;"><n-icon size="22"><info-circle-outlined /></n-icon>提示：腾飞T1000默认波特率为1200</div>
-          <div style="width: 140px;margin-left: 190px;text-align: right;">
-            <n-button type="primary" @click="save">保存</n-button>
-            <n-button v-if="dataObj.dtuChildId !== null && dataObj.dtuChildId !== undefined && dataObj.dtuChildId !== ''" type="warning" style="margin-left: 20px;" @click="delChild">删除</n-button>
+          <div style="width: 180px;margin-left: 190px;text-align: right;">
+            <n-button type="primary" @click="save">
+              <template #icon>
+                <n-icon>
+                  <check-circle-outlined />
+                </n-icon>
+              </template>
+              保存
+            </n-button>
+            <n-button v-if="dataObj.dtuChildId !== null && dataObj.dtuChildId !== undefined && dataObj.dtuChildId !== ''" type="warning" style="margin-left: 20px;" @click="delChild">
+              <template #icon>
+                <n-icon>
+                  <close-circle-outlined />
+                </n-icon>
+              </template>
+              删除
+            </n-button>
           </div>
         </div>
       </n-form-item>
@@ -54,9 +68,31 @@
           &nbsp;&nbsp;&nbsp;站号&nbsp;<n-input v-model:value="dataObj.stationId" style="width: 100px;"></n-input>&nbsp;&nbsp;&nbsp;
         </template>
         <div style="display: flex;font-size: 14px;align-items: center;margin-left: 20px;color: #999;"><n-icon size="22"><info-circle-outlined /></n-icon>示例：192.168.1.1&nbsp;&nbsp;101</div>
-        <div style="width: 140px;margin-left: 50px;text-align: right;">
-          <n-button type="primary" @click="save">保存</n-button>
-          <n-button v-if="dataObj.dtuChildId !== null && dataObj.dtuChildId !== undefined && dataObj.dtuChildId !== ''" type="warning" style="margin-left: 20px;" @click="delChild">删除</n-button>
+        <div style="width: 180px;margin-left: 50px;text-align: right;">
+          <n-button type="primary" @click="save">
+            <template #icon>
+              <n-icon>
+                <check-circle-outlined />
+              </n-icon>
+            </template>
+            保存
+          </n-button>
+          <n-button v-if="dataObj.dtuChildId !== null && dataObj.dtuChildId !== undefined && dataObj.dtuChildId !== ''" type="warning" style="margin-left: 20px;" @click="delChild">
+            <template #icon>
+              <n-icon>
+                <close-circle-outlined />
+              </n-icon>
+            </template>
+            删除
+          </n-button>
+          <n-button v-if="dataObj.dtuChildId === null || dataObj.dtuChildId === undefined || dataObj.dtuChildId === ''" type="primary" style="margin-left: 20px;" @click="openImport">
+            <template #icon>
+              <n-icon>
+                <import-outlined />
+              </n-icon>
+            </template>
+            导入
+          </n-button>
         </div>
       </n-form-item>
     </n-form>
@@ -75,12 +111,36 @@
     </div>
     <table-page :loading="loading" :tableHeight="200" :showPage="false" :firstLoad="false" :totalRows="totalRows" :columns="columns" :data="data" @change-page="changePage" ref="tablePage"></table-page>
     <div class="modal-btn" style="position: relative;">
-      <n-button type="primary" @click="paraSet">参数下发</n-button>
+      <n-button type="primary" @click="paraSet">
+        <template #icon>
+          <n-icon>
+            <down-circle-outlined />
+          </n-icon>
+        </template>
+        参数下发
+      </n-button>
       <div class="table-tip" style="position: absolute;left: 56%;top: 7px;margin-bottom: 0;display: flex;align-items: center;">
         <n-icon size="22"><info-circle-outlined /></n-icon>参数设定后，通过参数下发按钮将设置参数下发至采集器。
       </div>
     </div>
   </div>
+  <n-modal v-model:show="modalImport" title="导入网关子设备" preset="card" style="width: 500px;" :mask-closable="false" :close-on-esc="false">
+    <div class="modal-field-con">
+      <div class="modal_form1">
+        <n-form ref="importForm" :model="importObj" :rules="importValidate" label-placement="left" label-width="110px" require-mark-placement="left">
+          <n-form-item label="网关" path="dtuId">
+            <n-select v-model:value="importObj.dtuId" filterable placeholder="请选择网关" @update:value="selectDtu" :options="dtuList" value-field="dtuId" label-field="dtuName" children-field="child"></n-select>
+          </n-form-item>
+          <n-form-item label="子设备" path="dtuChildId">
+            <n-select v-model:value="importObj.dtuChildId" filterable placeholder="请选择子设备" :options="dtuChildList" value-field="dtuChildId" label-field="dtuChildName"></n-select>
+          </n-form-item>
+        </n-form>
+        <div class="modal-btn">
+          <n-button type="primary" @click="saveImport">保存</n-button>
+        </div>
+      </div>
+    </div>
+  </n-modal>
 </n-modal>
 </template>
 <script lang="ts">
@@ -93,14 +153,14 @@ import { IInterfaceData } from '@/page/interface/interface'
 import { getCurrentInstance, ref, h, provide, inject, onBeforeUnmount } from 'vue'
 import { FormInst } from 'naive-ui'
 import { Add } from '@vicons/ionicons5'
-import { InfoCircleOutlined, CheckOutlined } from '@vicons/antd'
+import { InfoCircleOutlined, CheckOutlined, CheckCircleOutlined, CloseCircleOutlined, DownCircleOutlined, ImportOutlined } from '@vicons/antd'
 export default {
   props: {
     show: Boolean,
     title: String, // 标题
     obj: Object as any // 数据
   },
-  components: { tablePage, Add, InfoCircleOutlined, CheckOutlined },
+  components: { tablePage, Add, InfoCircleOutlined, CheckOutlined, CheckCircleOutlined, CloseCircleOutlined, DownCircleOutlined, ImportOutlined },
   setup (props) {
     const proxy: any = getCurrentInstance()!.proxy
     let { util, showModel, uploadRoot } = common()
@@ -149,6 +209,13 @@ export default {
       })
       showModel.value = true
       getChildData(true)
+      proxy.$api.get('commonRoot', '/dsa/api/dtu/web/list', {}, (r: IInterfaceData) => {
+        if (r.data.code === 0) {
+          dtuList.value = r.data.data
+        } else {
+          proxy.$myMessage.error1(r.data.msg)
+        }
+      })
     }
     init()
     let childData = ref<Array<any>>([])
@@ -292,6 +359,48 @@ export default {
               proxy.$myMessage.error1(r.data.msg)
             }
             proxy.$myLoading.close()
+          })
+        }
+      })
+    }
+    let modalImport = ref(false)
+    let importObj = ref({ dtuId: '', dtuChildId: '' })
+    const importForm = ref<FormInst | null>(null)
+    const importValidate = ref({ // 表单验证
+      dtuId: [
+        { required: true, message: '请选择网关', trigger: 'change' }
+      ],
+      dtuChildId: [
+        { required: true, message: '请选择子设备', trigger: 'change' }
+      ]
+    })
+    let dtuList = ref([])
+    let dtuChildList = ref([])
+    function openImport () {
+      importObj.value = { dtuId: '', dtuChildId: '' }
+      modalImport.value = true
+    }
+    function selectDtu (val: string) {
+      dtuChildList.value = []
+      proxy.$api.get('commonRoot', '/dsa/api/dtu/child/web/list', { dtuId: val }, (r: IInterfaceData) => {
+        if (r.data.code === 0) {
+          dtuChildList.value = r.data.data
+        } else {
+          proxy.$myMessage.error1(r.data.msg)
+        }
+      })
+    }
+    function saveImport () {
+      importForm.value?.validate((errors: any) => {
+        if (!errors) {
+          proxy.$api.post('commonRoot', '/dsa/api/dtu/child/web/copy', { dtuId: props.obj.dtuId, dtuChildId: importObj.value.dtuChildId }, (r: IInterfaceData) => {
+            if (r.data.code === 0) {
+              proxy.$myMessage.success('导入成功')
+              modalImport.value = false
+              getChildData(true)
+            } else {
+              proxy.$myMessage.error1(r.data.msg)
+            }
           })
         }
       })
@@ -455,7 +564,9 @@ export default {
     })
     return {
       showModel, uploadRoot, formValidate, dataObj, ruleValidate, loading, totalRows, data, method, dtuChildTypeList, dtuChildTypeArr, portList,
-      childData, childIndex, init, selectChild, selectEmptyChild, connectTest, save, delChild, columns, changePage, add, paraSet, typeIncludes
+      childData, childIndex, init, selectChild, selectEmptyChild, connectTest, save, delChild, modalImport, importObj, importForm, importValidate,
+      dtuList, dtuChildList, openImport, selectDtu, saveImport,
+      columns, changePage, add, paraSet, typeIncludes
     }
   }
 }

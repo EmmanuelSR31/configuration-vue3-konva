@@ -250,7 +250,7 @@ export default function () {
   }
   let basicSettings = ref({ // 基本设置
     name: '',
-    cover: '',
+    coverChart: '',
     width: 1920,
     height: 1080,
     adapt: false,

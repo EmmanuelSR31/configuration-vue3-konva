@@ -82,6 +82,7 @@ export default createStore({
         backColor: 'rgba(255,255,255,0)',
         align: 'left',
         icon: 'icontianqi',
+        fontSize: 12,
         width: 200,
         height: 60
       },
@@ -92,6 +93,7 @@ export default createStore({
         backColor: 'rgba(255,255,255,0)',
         align: 'left',
         icon: 'icontubiaozhizuomoban',
+        fontSize: 12,
         width: 300,
         height: 20
       },
@@ -102,6 +104,7 @@ export default createStore({
         backColor: 'rgba(255,255,255,0)',
         align: 'left',
         icon: 'iconicon-temperature',
+        fontSize: 12,
         width: 320,
         height: 120
       },
@@ -112,6 +115,7 @@ export default createStore({
         backColor: 'rgba(255,255,255,0)',
         align: 'left',
         icon: 'icontianqi-',
+        fontSize: 12,
         width: 640,
         height: 60
       },

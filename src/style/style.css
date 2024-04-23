@@ -471,7 +471,7 @@ a, a:hover, a:focus, a:active {
 }
 
 .modal-btn .n-button {
-  width: 90px;
+  min-width: 90px;
   height: 36px;
 }
 
