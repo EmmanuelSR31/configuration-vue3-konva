@@ -35,10 +35,22 @@ export default function () {
     temp = temp.replace(/"children":\[\],/g, '')
     return JSON.parse(temp)
   }
+  /**
+   * @desc 权限过期
+   */
+  function permissionExpiration () {
+    proxy.$myMessage.error1('权限过期，请重新登录')
+    setTimeout(() => {
+      sessionStorage.user = ''
+      sessionStorage.breadcrumblist = []
+      sessionStorage.token = ''
+      window.location.reload()
+    }, 300)
+  }
   if (!Util.isEmpty(sessionStorage.user)) {
     user.value = JSON.parse(sessionStorage.user)
   }
   return {
-    user, uploadRoot, showModel, token, util, upfileError, closeDialog, checkEmpty, arrRemoveEmptyChildren
+    user, uploadRoot, showModel, token, util, upfileError, closeDialog, checkEmpty, arrRemoveEmptyChildren, permissionExpiration
   }
 }

@@ -106,9 +106,9 @@ function apiAxios (rootName: string, method: string, url: string, params: any, c
     headers: headers
   })
   .then(function (res: any) {
-    if (res.data.msg.includes('登录过期')) {
+    if (res.data.msg.includes('登录过期') || res.data.code === -2) {
       sessionStorage.clear()
-      window.location.href = '/login'
+      window.location.reload()
     }
     callback(res)
   })

@@ -1,12 +1,14 @@
 <template>
   <div class="app-main">
     <n-config-provider :locale="zhCN" :date-locale="dateZhCN" :theme-overrides="themeOverrides">
-      <router-view></router-view>
+      <n-notification-provider>
+        <router-view></router-view>
+      </n-notification-provider>
     </n-config-provider>
   </div>
 </template>
 <script lang="ts" setup>
-import { zhCN, dateZhCN, NConfigProvider, GlobalThemeOverrides } from 'naive-ui'
+import { zhCN, dateZhCN, NConfigProvider, GlobalThemeOverrides, NNotificationProvider } from 'naive-ui'
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {

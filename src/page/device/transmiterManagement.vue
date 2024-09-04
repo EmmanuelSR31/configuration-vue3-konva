@@ -48,7 +48,7 @@ export default {
         }
       },
       {
-        title: '转发参数',
+        title: '转发接口',
         key: 'targetUrl',
         minWidth: 140
       },

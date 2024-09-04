@@ -99,13 +99,13 @@
 <script lang="ts" setup>
 import common from '@/page/mixins/common' // 基本混入
 import { openedPageTags } from './components/index'
-import { getCurrentInstance, ref, computed, onMounted, h, Component } from 'vue'
-import { NIcon } from 'naive-ui'
+import { getCurrentInstance, ref, computed, onMounted, h, Component, onBeforeUnmount } from 'vue'
+import { NIcon, useNotification } from 'naive-ui'
 import { ChevronDown, SettingsOutline, ExitOutline, PersonCircleOutline, LogOutOutline } from '@vicons/ionicons5'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@vicons/antd'
 import { IMenu, IInterfaceData } from '@/page/interface/interface'
 const proxy: any = getCurrentInstance()!.proxy
-let { util, uploadRoot, arrRemoveEmptyChildren, user } = common()
+let { util, uploadRoot, arrRemoveEmptyChildren, user, permissionExpiration } = common()
 let menuOptions = ref([])
 const menuList = ref([]) // 左侧菜单
 let leftMenuWidth = ref(260) // 左侧菜单宽度
@@ -201,6 +201,12 @@ function init () {
       })
     }
   })
+  proxy.$api.get('commonRoot', '/mes/device/enum/DeviceAlarmTigMode', {}, (r: IInterfaceData) => {
+    if (r.data.code === 0) {
+      deviceAlarmTigMode.value = r.data.data
+    }
+  })
+  initSocket()
 }
 function renderIcon (icon: Component) {
   return () => h(NIcon, null, { default: () => h(icon) })
@@ -312,6 +318,100 @@ function clickTag (obj: any) {
   getBreadcrumbName({ menuStructName: obj.text, menuStructUrl: obj.url, menuStructId: obj.id, menuStructPid: obj.pid, menuStructIcon: '' })
   breadcrumblist.value.reverse()
 }
+let websocket = ref<any>(null)
+let exitFlag = ref(false) // 页面退出
+const notification = useNotification()
+/**
+* @desc websocket初始化
+*/
+function initSocket () {
+  let url = uploadRoot.value.replace('http://', 'ws://') + '/dsa/api/deviceAlarm/websocket/' + sessionStorage.token
+  websocket.value = new WebSocket(url)
+  websocket.value.onopen = (e: any) => {
+    console.log('onopen')
+  }
+  websocket.value.onerror = (e: any) => {
+    console.log('onerror')
+    console.log(e)
+  }
+  websocket.value.onmessage = (e: any) => {
+    console.log(e.data)
+    if (!util.value.isEmpty(e.data)) {
+      let temp = JSON.parse(e.data)
+      if (temp.code === -2) {
+        permissionExpiration()
+        return false
+      }
+      notification.create({
+        content: () => {
+          return h('div', [
+            h('div', {
+              style: {
+                padding: '5px 0',
+                textAlign: 'center',
+                fontSize: '16px'
+              }
+            }, temp.deviceName),
+            h('div', {
+              style: {
+                padding: '5px 0',
+                fontSize: '14px'
+              }
+            }, '报警内容：' + temp.alarmNote),
+            h('div', {
+              style: {
+                padding: '5px 0',
+                fontSize: '14px'
+              }
+            }, '实 时 值：' + temp.value),
+            h('div', {
+              style: {
+                padding: '5px 0',
+                fontSize: '14px'
+              }
+            }, '设定条件：' + getConditionText(temp)),
+            h('div', {
+              style: {
+                textAlign: 'right',
+                fontSize: '13px'
+              }
+            }, temp.updateDate.substring(0, 19))
+          ])
+        }
+      })
+    }
+  }
+  websocket.value.onclose = (e: any) => {
+    console.log('onclose')
+    if (!exitFlag.value) {
+      setTimeout(() => {
+        initSocket()
+      }, 5000)
+    }
+  }
+}
+let deviceAlarmTigMode: { [key: string]: any } = ref({})
+/**
+* @desc 条件文字
+*/
+function getConditionText (obj: any) {
+  let temp = ''
+  if (!util.value.isEmpty(obj.deviceAlarmTigMode)) {
+    temp = deviceAlarmTigMode.value[obj.deviceAlarmTigMode]
+    if (temp !== undefined) {
+      temp = temp.replace('x', obj.x)
+      temp = temp.replace('X', obj.x)
+      temp = temp.replace('y', obj.y)
+      temp = temp.replace('Y', obj.y)
+      temp = temp.replace('s', obj.second)
+    }
+  }
+  return temp
+}
+onBeforeUnmount(() => {
+  exitFlag.value = true
+  websocket.value.close()
+}),
 onMounted(() => {
   init()
   if (!util.value.isEmpty(sessionStorage.breadcrumblist)) {

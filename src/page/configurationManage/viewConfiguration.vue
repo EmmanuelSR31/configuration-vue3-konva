@@ -147,7 +147,7 @@ export default {
   components: { echartLine, echartLiquidfill, numberKeyboard },
   setup () {
     const proxy: any = getCurrentInstance()!.proxy
-    let { util, uploadRoot } = common()
+    let { util, uploadRoot, permissionExpiration } = common()
     let { method, id, items, configImg, configLabel, configTag, configText, configDatetime, configDeviceImg, configWaterBoxGroup, configWaterBoxBack, configWaterBoxWater,
       configWaterBoxLine, configValue, configStatus, configSimpleButtonText, configButtunTag, configLineGroup, configLine, configLinePipe, configUploadImg,
       basicSettings, getBasicStyle, itemStyle } = configuration()
@@ -203,6 +203,10 @@ export default {
         console.log(e.data)
         if (!util.value.isEmpty(e.data)) {
           let temp = JSON.parse(e.data)
+          if (temp.code === -2) {
+            permissionExpiration()
+            return false
+          }
           for (const iterator of sensorItems.value) {
             let id = ''
             if (!util.value.isEmpty(iterator.deviceDataId)) {
@@ -241,6 +245,10 @@ export default {
         // console.log(e.data)
         if (!util.value.isEmpty(e.data)) {
           let temp = JSON.parse(e.data)
+          if (temp.code === -2) {
+            permissionExpiration()
+            return false
+          }
           for (const iterator of sensorItems.value) {
             if (iterator.deviceId === temp.deviceId) {
               iterator.deviceState = temp.deviceState

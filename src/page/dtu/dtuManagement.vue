@@ -86,7 +86,7 @@ export default {
   components: { EditOutlined, DownOutlined },
   setup () {
     const proxy: any = getCurrentInstance()!.proxy
-    let { util, uploadRoot } = common()
+    let { util, uploadRoot, permissionExpiration } = common()
     let { data } = table()
     let dtuStateList = ref<{ [key: string]: string }>({})
     /**
@@ -210,6 +210,11 @@ export default {
         // console.log('onmessage')
         // console.log(e.data)
         if (!util.value.isEmpty(e.data)) {
+          let temp1 = JSON.parse(e.data)
+          if (temp1.code === -2) {
+            permissionExpiration()
+            return false
+          }
           let temp = JSON.parse(e.data).data
           if (util.value.isType(temp, 'array')) {
             data.value = temp

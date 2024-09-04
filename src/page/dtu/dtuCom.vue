@@ -163,7 +163,7 @@ export default {
   components: { tablePage, Add, InfoCircleOutlined, CheckOutlined, CheckCircleOutlined, CloseCircleOutlined, DownCircleOutlined, ImportOutlined },
   setup (props) {
     const proxy: any = getCurrentInstance()!.proxy
-    let { util, showModel, uploadRoot } = common()
+    let { util, showModel, uploadRoot, permissionExpiration } = common()
     let { loading, totalRows, data } = table()
     const parentChangePage:any = inject('parentChangePage')
     const formValidate = ref<FormInst | null>(null)
@@ -282,6 +282,11 @@ export default {
         // console.log('onmessage')
         // console.log(e.data)
         if (!util.value.isEmpty(e.data)) {
+          let temp1 = JSON.parse(e.data)
+          if (temp1.code === -2) {
+            permissionExpiration()
+            return false
+          }
           let temp = JSON.parse(e.data).data
           if (util.value.isType(temp, 'array')) {
             data.value = temp
